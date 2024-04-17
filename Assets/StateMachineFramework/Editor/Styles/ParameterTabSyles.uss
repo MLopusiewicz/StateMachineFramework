@@ -1,0 +1,74 @@
+#ParameterTab.hidden {
+    width: 0;
+}
+
+#ParameterTab.hidden #ControlPanel {
+    visibility: hidden;
+}
+
+#ParameterTab {
+    width: 250px;
+    flex-shrink: 0;
+    transition-property: width;
+    transition-duration: 0.2s;
+}
+
+.parameter-add-dropdown > * {
+    width: 100%;
+    min-width: 0;
+    border-top-width: 0;
+    border-right-width: 0;
+    border-bottom-width: 0;
+    border-left-width: 0;
+}
+
+#ParameterTab {
+    background-color: var(--unity-colors-window-background);
+}
+
+#ParameterTabButton:hover {
+    background-color: var(--unity-colors-highlight-background);
+}
+
+#ParameterTabButton {
+    background-color: var(--unity-colors-window-background);
+    background-image: var(--unity-icons-arrow_left);
+    -unity-background-image-tint-color: rgb(255, 255, 255);
+}
+
+#ParameterTab.hidden #ParameterTabButton {
+    background-image: var(--unity-icons-arrow_right);
+}
+
+.parameter-add-dropdown {
+    width: 30px;
+    flex-shrink: 0;
+    -unity-font-style: normal;
+    border-top-width: 0;
+    border-right-width: 0;
+    border-bottom-width: 0;
+    border-left-width: 0;
+}
+
+.parameter-add-dropdown .unity-text-element {
+    flex-shrink: 0;
+    border-top-width: 0;
+    border-right-width: 0;
+    border-bottom-width: 0;
+    border-left-width: 0;
+    -unity-font-style: bold;
+    font-size: 18px;
+}
+
+.unity-toggle__input {
+    align-items: center;
+    justify-content: center;
+    margin-top: 0;
+    margin-right: 0;
+    margin-bottom: 0;
+    margin-left: 0;
+    padding-top: 0;
+    padding-right: 0;
+    padding-bottom: 0;
+    padding-left: 0;
+}

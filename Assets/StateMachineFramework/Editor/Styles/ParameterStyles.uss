@@ -1,0 +1,103 @@
+.parameter {
+    flex-direction: row;
+    justify-content: space-between;
+}
+
+.parameter-name-field {
+    flex-grow: 1;
+}
+
+.parameter-value {
+    flex-shrink: 1;
+    flex-grow: 0;
+    flex-direction: row;
+    justify-content: center;
+    width: 80px;
+}
+
+.parameter-remove-button {
+    width: 20px;
+    display: none;
+    height: 20px;
+    flex-shrink: 0;
+    position: absolute;
+    right: 0;
+}
+
+.parameter-value__trigger .unity-toggle__input {
+    background-color: var(--unity-colors-default-background);
+    border-top-left-radius: 100px;
+    border-top-right-radius: 100px;
+    border-bottom-right-radius: 100px;
+    border-bottom-left-radius: 100px;
+    background-image: none;
+    border-top-width: 1px;
+    border-right-width: 1px;
+    border-bottom-width: 1px;
+    border-left-width: 1px;
+    width: 12px;
+    height: 12px;
+    flex-grow: 0;
+    flex-shrink: 0;
+    align-items: center;
+    justify-content: center;
+}
+
+.parameter-value__trigger {
+    align-items: center;
+    justify-content: center;
+    flex-grow: 0;
+    flex-shrink: 1;
+    height: 100%;
+}
+
+.parameter-value__trigger:hover .unity-toggle__input {
+    border-left-color: var(--unity-colors-default-text-hover);
+    border-right-color: var(--unity-colors-default-text-hover);
+    border-top-color: var(--unity-colors-default-text-hover);
+    border-bottom-color: var(--unity-colors-default-text-hover);
+}
+
+.parameter-value__trigger:checked .unity-toggle__checkmark {
+    border-top-left-radius: 3px;
+    border-top-right-radius: 3px;
+    border-bottom-right-radius: 3px;
+    border-bottom-left-radius: 3px;
+    width: 6px;
+    height: 6px;
+    background-color: rgb(255, 255, 255);
+    flex-shrink: 0;
+    border-top-width: 0;
+    border-right-width: 0;
+    border-bottom-width: 0;
+    border-left-width: 0;
+    background-image: none;
+}
+
+.parameter-value__trigger .unity-toggle__checkmark {
+    border-top-left-radius: 3px;
+    border-top-right-radius: 3px;
+    border-bottom-right-radius: 3px;
+    border-bottom-left-radius: 3px;
+    width: 6px;
+    height: 6px;
+    flex-shrink: 0;
+    border-top-width: 0;
+    border-right-width: 0;
+    border-bottom-width: 0;
+    border-left-width: 0;
+    background-image: none;
+    background-color: rgba(0, 0, 0, 0);
+    margin-top: 0;
+    margin-right: 0;
+    margin-bottom: 0;
+    margin-left: 0;
+    padding-top: 0;
+    padding-right: 0;
+    padding-bottom: 0;
+    padding-left: 0;
+}
+
+.unity-collection-view__item--selected .parameter-remove-button {
+    display: flex;
+}

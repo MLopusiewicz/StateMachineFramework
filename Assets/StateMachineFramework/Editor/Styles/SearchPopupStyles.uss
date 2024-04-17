@@ -1,0 +1,31 @@
+#TypeList .unity-label {
+    -unity-text-align: middle-left;
+}
+
+.search-popup-bar {
+    width: 100%;
+}
+
+.search-popup {
+    flex-grow: 1;
+    background-color: rgb(66, 66, 66);
+    align-items: center;
+    border-top-width: 1px;
+    border-right-width: 1px;
+    border-bottom-width: 1px;
+    border-left-width: 1px;
+    border-left-color: rgb(127, 127, 127);
+    border-right-color: rgb(127, 127, 127);
+    border-top-color: rgb(127, 127, 127);
+    border-bottom-color: rgb(127, 127, 127);
+    padding-top: 3px;
+    padding-right: 3px;
+    padding-bottom: 3px;
+    padding-left: 3px;
+}
+
+.search-popup-list {
+    flex-grow: 1;
+    flex-shrink: 1;
+    width: 100%;
+}

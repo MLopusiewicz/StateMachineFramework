@@ -1,0 +1,4 @@
+Button {
+    background-image: var(--unity-icons-window_button_restore);
+    -unity-background-scale-mode: scale-to-fit;
+}

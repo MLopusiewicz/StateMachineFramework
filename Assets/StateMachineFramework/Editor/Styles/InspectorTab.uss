@@ -1,0 +1,9 @@
+#Transitions {
+    flex-shrink: 0;
+    padding-top: 5px;
+    padding-right: 0;
+    padding-bottom: 5px;
+    padding-left: 0;
+    -unity-text-align: middle-center;
+    max-height: 50%;
+}

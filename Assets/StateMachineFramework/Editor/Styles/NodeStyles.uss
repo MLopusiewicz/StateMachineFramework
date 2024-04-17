@@ -1,0 +1,163 @@
+.node {
+    height: 42px;
+    border-top-left-radius: 10px;
+    border-top-right-radius: 10px;
+    border-bottom-right-radius: 10px;
+    border-bottom-left-radius: 10px;
+    align-items: stretch;
+    justify-content: center;
+    position: absolute;
+    flex-shrink: 0;
+    background-image: url("project://database/Assets/StateMachineFramework/Editor/pngs/Gradient.png?fileID=21300000&guid=b759344523883e94a95c1f198fd08208&type=3#Gradient");
+    -unity-background-image-tint-color: rgb(111, 111, 111);
+    min-width: 150px;
+    padding-left: 20px;
+    padding-right: 20px;
+    border-top-width: 1px;
+    border-right-width: 1px;
+    border-bottom-width: 1px;
+    border-left-width: 1px;
+    border-left-color: rgb(111, 111, 111);
+    border-right-color: rgb(111, 111, 111);
+    border-top-color: rgb(111, 111, 111);
+    border-bottom-color: rgb(111, 111, 111);
+}
+
+.node-special-enter {
+    background-color: rgb(21, 110, 48);
+    -unity-background-image-tint-color: rgb(21, 110, 48);
+    border-top-width: 1px;
+    border-right-width: 1px;
+    border-bottom-width: 1px;
+    border-left-width: 1px;
+    border-left-color: rgb(21, 110, 48);
+    border-right-color: rgb(21, 110, 48);
+    border-top-color: rgb(21, 110, 48);
+    border-bottom-color: rgb(21, 110, 48);
+}
+
+.node-special-exit {
+    background-color: rgb(151, 26, 26);
+    -unity-background-image-tint-color: rgb(151, 26, 26);
+    border-left-color: rgb(151, 26, 26);
+    border-right-color: rgb(151, 26, 26);
+    border-top-color: rgb(151, 26, 26);
+    border-bottom-color: rgb(151, 26, 26);
+    border-top-width: 1px;
+    border-right-width: 1px;
+    border-bottom-width: 1px;
+    border-left-width: 1px;
+}
+
+.node-special-any {
+    background-color: rgb(72, 129, 118);
+    -unity-background-image-tint-color: rgb(72, 129, 118);
+    border-left-color: rgb(72, 129, 118);
+    border-right-color: rgb(72, 129, 118);
+    border-top-color: rgb(72, 129, 118);
+    border-bottom-color: rgb(72, 129, 118);
+    border-top-width: 1px;
+    border-right-width: 1px;
+    border-bottom-width: 1px;
+    border-left-width: 1px;
+}
+
+.node-tree {
+    border-top-left-radius: 30px;
+    border-top-right-radius: 30px;
+    border-bottom-right-radius: 30px;
+    border-bottom-left-radius: 30px;
+    -unity-background-image-tint-color: rgb(93, 93, 93);
+    border-top-width: 1px;
+    border-right-width: 1px;
+    border-bottom-width: 1px;
+    border-left-width: 1px;
+    border-left-color: rgb(93, 93, 93);
+    border-right-color: rgb(93, 93, 93);
+    border-top-color: rgb(93, 93, 93);
+    border-bottom-color: rgb(93, 93, 93);
+    height: 52px;
+}
+
+.node-label {
+    -unity-text-align: middle-center;
+    flex-grow: 1;
+}
+
+.node:hover {
+    border-top-color: var(--unity-colors-highlight-background);
+    border-right-color: var(--unity-colors-highlight-background);
+    border-bottom-color: var(--unity-colors-highlight-background);
+    border-left-color: var(--unity-colors-highlight-background);
+    border-top-width: 2px;
+    border-right-width: 2px;
+    border-bottom-width: 2px;
+    border-left-width: 2px;
+}
+
+.node.selected {
+    border-left-color: rgb(255, 255, 255);
+    border-right-color: rgb(255, 255, 255);
+    border-top-color: rgb(255, 255, 255);
+    border-bottom-color: rgb(255, 255, 255);
+    border-top-width: 2px;
+    border-right-width: 2px;
+    border-bottom-width: 2px;
+    border-left-width: 2px;
+}
+
+.node.active {
+    border-left-color: rgb(0, 255, 34);
+    border-right-color: rgb(0, 255, 34);
+    border-top-color: rgb(0, 255, 34);
+    border-bottom-color: rgb(0, 255, 34);
+    border-top-width: 2px;
+    border-right-width: 2px;
+    border-bottom-width: 2px;
+    border-left-width: 2px;
+}
+
+.view-port-container {
+    width: 2200px;
+    height: 2200px;
+    flex-shrink: 0;
+    -unity-background-scale-mode: scale-and-crop;
+    background-image: none;
+    background-size: auto;
+    background-repeat: repeat;
+}
+
+.view-port {
+    overflow: hidden;
+}
+
+.view-port-container > .node {
+    flex-shrink: 0;
+    position: absolute;
+}
+
+.node-special-default {
+    background-color: rgb(255, 158, 0);
+}
+
+.node.active {
+    border-top-width: 2px;
+    border-right-width: 2px;
+    border-bottom-width: 2px;
+    border-left-width: 2px;
+    border-left-color: rgb(255, 255, 255);
+    border-right-color: rgb(255, 255, 255);
+    border-top-color: rgb(255, 255, 255);
+    border-bottom-color: rgb(255, 255, 255);
+}
+
+.node.selected {
+    border-top-width: 2px;
+    border-right-width: 2px;
+    border-bottom-width: 2px;
+    border-left-width: 2px;
+    border-left-color: rgb(0, 155, 255);
+    border-right-color: rgb(0, 155, 255);
+    border-top-color: rgb(0, 155, 255);
+    border-bottom-color: rgb(0, 155, 255);
+}

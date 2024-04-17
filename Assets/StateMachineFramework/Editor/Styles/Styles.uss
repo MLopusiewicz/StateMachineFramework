@@ -1,0 +1,85 @@
+.vector-line {
+    --line-width: 5;
+    -unity-background-image-tint-color: rgb(0, 211, 255);
+}
+
+.vector-line:hover {
+    --line-width: 5;
+    -unity-background-image-tint-color: rgb(255, 0, 0);
+}
+
+.transition-anchor {
+    position: absolute;
+    width: 0;
+    height: 0;
+    align-items: center;
+    justify-content: flex-end;
+}
+
+.transition-line {
+    background-color: rgb(188, 184, 170);
+    flex-shrink: 0;
+    transform-origin: bottom;
+    width: 3px;
+    align-items: center;
+    justify-content: center;
+    height: 100%;
+}
+
+.transition-action:hover .transition-line {
+    background-color: rgb(136, 136, 136);
+}
+
+.transition-arrow {
+    width: 15px;
+    height: 15px;
+    background-image: var(--unity-icons-foldout-pressed);
+    rotate: -90deg;
+    -unity-background-image-tint-color: rgb(255, 255, 255);
+}
+
+.transition-action {
+    width: 30px;
+    flex-shrink: 0;
+    align-items: center;
+}
+
+#InspectorTab {
+    background-color: var(--unity-colors-window-background);
+    border-left-width: 1px;
+    border-left-color: var(--unity-colors-window-border);
+}
+
+.transition-anchor.selected .transition-line {
+    background-color: rgb(0, 103, 255);
+    flex-shrink: 0;
+    transform-origin: bottom;
+    width: 3px;
+    align-items: center;
+    justify-content: center;
+    height: 100%;
+}
+
+.error-icon {
+    background-image: var(--unity-icons-console_entry_error);
+}
+
+.error-label {
+    color: var(--unity-colors-error-text);
+}
+
+.view-port-grid {
+    position: absolute;
+    flex-shrink: 0;
+    left: -200%;
+    top: -200%;
+    right: -200%;
+    bottom: -200%;
+    --grid-gap: 160;
+    --grid-divisions: 5;
+    --major-line__width: 2;
+    --major-line__color: var(--unity-colors-tooltip-border);
+    --minor-line__width: 0.5;
+    --minor-line__color: var(--unity-colors-tooltip-border);
+    background-color: var(--unity-colors-default-background);
+}
