@@ -17,6 +17,7 @@ Framework was developed to speed up creation of state machines. The solution is 
 ## Known Limitations
 - No transitions between layers 
 - no selection box (UX) 
+- no layers
 ## Installation
 use this link for PackagerManager:
 ```

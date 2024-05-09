@@ -5,7 +5,7 @@ using UnityEngine.UIElements;
 
 namespace StateMachineFramework.Editor {
     public class DepthPanel {
-        Window w;
+        SMWindow w;
         List<TreeNode> depth = new();
         Dictionary<TreeNode, VisualElement> nodeButtons = new();
         VisualElement container;
@@ -13,7 +13,7 @@ namespace StateMachineFramework.Editor {
         public TreeNode ActiveTree => depth[^1];
         VisualElement depthContainer;
 
-        public DepthPanel(Window w) {
+        public DepthPanel(SMWindow w) {
             this.w = w;
             container = w.rootVisualElement.Q(name: "DepthPanel");
             depthContainer = container.Q(name: "DepthContainer");

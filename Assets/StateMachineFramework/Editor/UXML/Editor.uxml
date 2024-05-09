@@ -10,15 +10,16 @@
     <Style src="project://database/Assets/StateMachineFramework/Editor/Styles/SearchPopupStyles.uss?fileID=7433441132597879392&amp;guid=eff95a65f1f826b45ac98f8588bfd914&amp;type=3#SearchPopupStyles" />
     <ui:VisualElement name="Container" style="flex-grow: 1; flex-direction: row-reverse;">
         <ui:VisualElement name="InspectorTab" style="flex-shrink: 0; width: 350px; padding-top: 10px; padding-right: 10px; padding-bottom: 10px; padding-left: 10px;">
-            <ui:VisualElement name="NodeInspector" style="flex-grow: 0; display: flex; height: 50%;">
+            <ui:VisualElement name="NodeInspector" style="flex-grow: 1; display: flex; height: 50%;">
+                <ui:Label tabindex="-1" text="Node" parse-escape-sequences="true" display-tooltip-when-elided="true" name="NodeLabel" class="inspector-header" />
                 <ui:Label tabindex="-1" text="Name" parse-escape-sequences="true" display-tooltip-when-elided="true" name="Name" style="-unity-font-style: bold; font-size: 16px;" />
                 <ui:TextField value="filler text" name="NameField" is-delayed="false" password="false" keyboard-type="ASCIICapable" style="margin-top: 5px;" />
                 <ui:VisualElement style="border-left-color: rgb(0, 0, 0); border-right-color: rgb(0, 0, 0); border-top-color: rgb(0, 0, 0); border-bottom-color: rgb(0, 0, 0); border-top-width: 1px; margin-top: 20px; margin-bottom: 20px;" />
-                <ui:ListView show-add-remove-footer="true" reorder-mode="Animated" selection-type="Multiple" virtualization-method="DynamicHeight" name="BehaviourList" reorderable="true" show-border="true" show-alternating-row-backgrounds="ContentOnly" />
+                <ui:ListView show-add-remove-footer="true" reorder-mode="Animated" selection-type="Multiple" virtualization-method="DynamicHeight" name="BehaviourList" reorderable="true" show-border="true" show-alternating-row-backgrounds="ContentOnly" style="flex-grow: 0;" />
                 <StateMachineFramework.View.SearchPopupVE style="flex-grow: 0; flex-shrink: 0; min-height: 150px;" />
             </ui:VisualElement>
-            <ui:VisualElement name="TransitionInspector" style="flex-grow: 1; flex-shrink: 0;">
-                <ui:Label tabindex="-1" text="Transitions" parse-escape-sequences="true" display-tooltip-when-elided="true" style="-unity-font-style: bold; font-size: 16px;" />
+            <ui:VisualElement name="TransitionInspector" style="flex-grow: 1; flex-shrink: 0; display: flex;">
+                <ui:Label tabindex="-1" text="Transitions" parse-escape-sequences="true" display-tooltip-when-elided="true" name="Header" class="inspector-header" />
                 <ui:ListView name="Transitions" virtualization-method="FixedHeight" show-bound-collection-size="false" show-add-remove-footer="true" show-border="true" style="margin-bottom: 10px;" />
                 <ui:VisualElement style="flex-shrink: 0;">
                     <ui:VisualElement name="AnyStateError" style="flex-grow: 1; flex-direction: row; flex-shrink: 0;">

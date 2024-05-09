@@ -1,4 +1,6 @@
 using StateMachineFramework.Runtime;
+using StateMachineFramework.View;
+using System;
 using System.Collections.Generic;
 using UnityEditor;
 using UnityEditor.PackageManager.UI;
@@ -9,15 +11,15 @@ using static Codice.Client.Common.DiffMergeToolConfig;
 namespace StateMachineFramework.Editor {
 
     [ExecuteAlways]
-    public class Window : EditorWindow {
+    public class SMWindow : EditorWindow {
         [SerializeField] private int m_SelectedIndex = -1;
         public VisualTreeAsset asset;
         public Texture icon;
 
-        public static List<Window> windowsList = new List<Window>();
+        public static List<SMWindow> windowsList = new List<SMWindow>();
         [MenuItem("Window/State Machine Framework")]
         public static void ShowMyEditor() {
-            Window wnd = GetWindow<Window>();
+            SMWindow wnd = GetWindow<SMWindow>();
             wnd.minSize = new Vector2(450, 200);
             wnd.titleContent = new GUIContent("State Machine", wnd.icon);
             UnityEditor.Selection.selectionChanged += wnd.SelectionUpdated;
@@ -34,7 +36,7 @@ namespace StateMachineFramework.Editor {
         public DepthPanel depthPanel;
         public StateMachine stateMachine;
         public EditorSelection selection;
-
+        public InspectorWindow inspector;
         public RuntimeDisplay runtime;
         public bool isRuntime = false;
         public void HardInit(StateMachine sm) {
@@ -60,7 +62,7 @@ namespace StateMachineFramework.Editor {
             serialization = new SerializationHelper();
             selection = new EditorSelection(this);
             depthPanel = new DepthPanel(this);
-
+            inspector = new InspectorWindow(this);
             transitionMaker = new TransitionMaker(this);
             parameterTab = new ParameterInspector(this);
             nodeView = new NodeTreeView(this);
@@ -116,5 +118,22 @@ namespace StateMachineFramework.Editor {
             windowsList.Remove(this);
         }
 
+    }
+    public class InspectorWindow {
+        public VisualElement activeTab;
+        public InspectorWindow(SMWindow window) {
+            window.selection.OnSelectionCleared += Clear;
+        }
+
+        private void Clear() {
+            activeTab?.SetDisplay(false);
+            activeTab = null;
+        }
+
+        public void SetActive(VisualElement tab) {
+            activeTab?.SetDisplay(false);
+            activeTab = tab;
+            tab.SetDisplay(true);
+        }
     }
 }

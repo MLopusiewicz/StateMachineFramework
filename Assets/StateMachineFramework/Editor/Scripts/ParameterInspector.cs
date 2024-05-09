@@ -3,6 +3,7 @@ using StateMachineFramework.View;
 using System;
 using System.Collections.Generic;
 using UnityEditor.UIElements;
+using UnityEngine;
 using UnityEngine.UIElements;
 using static StateMachineFramework.Runtime.ParameterController;
 
@@ -12,7 +13,7 @@ namespace StateMachineFramework.Editor {
 
         VisualElement tab;
         bool tabVisible = false;
-        private Window w;
+        private SMWindow w;
         ToolbarPopupSearchField searchBar;
         Dictionary<IParameter, VisualElement> paramVE = new();
         public Action<IParameter> ValueChanged;
@@ -29,7 +30,7 @@ namespace StateMachineFramework.Editor {
         {typeof(BoolParameter), ParameterType.Bool},
     };
 
-        public ParameterInspector(Window window) {
+        public ParameterInspector(SMWindow window) {
             tabButton = window.rootVisualElement.Q<Button>(name: "ParameterTabButton");
             tabButton.clicked += ToggleTab;
             tab = window.rootVisualElement.Q(name: "ParameterTab");
@@ -80,9 +81,7 @@ namespace StateMachineFramework.Editor {
             foreach (var i in indexes) {
                 w.serialization.RemoveParameter(i);
             }
-
             w.serialization.Apply();
-            RefreshList();
         }
 
         void OnReordered(int arg1, int arg2) {
@@ -178,8 +177,8 @@ namespace StateMachineFramework.Editor {
         }
 
         void RefreshList() {
-            paramList.itemsSource = w.stateMachine.Parameters;
-            paramList.RefreshItems();
+            paramList.itemsSource = new List<IParameter>(w.stateMachine.Parameters);
+            paramList.Rebuild();
         }
 
         internal void Clear() {

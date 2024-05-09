@@ -7,3 +7,17 @@
     -unity-text-align: middle-center;
     max-height: 50%;
 }
+
+#NodeLabel {
+    border-bottom-color: var(--unity-colors-default-border);
+}
+
+.inspector-header {
+    -unity-font-style: bold;
+    font-size: 18px;
+    -unity-text-align: upper-center;
+    border-bottom-width: 1px;
+    border-bottom-color: var(--unity-colors-default-border);
+    margin-bottom: 15px;
+    padding-bottom: 5px;
+}

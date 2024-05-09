@@ -6,10 +6,13 @@ using UnityEngine.UIElements;
 
 namespace StateMachineFramework.Editor {
     public class DragController {
-        bool isDragging;
+        public bool IsDragging { get; private set; }
         List<NodeVE> selectedNodes;
         ViewPortVE viewPort;
-        public Action OnPositionSet;
+        public Action<List<NodeVE>> OnPositionSet;
+        public List<NodeVE> draggedNodes = new();
+        float dragTreshhold = 10;
+        Vector2 drag = Vector2.zero;
 
         public DragController(List<NodeVE> selection, ViewPortVE viewPort) {
             selectedNodes = selection;
@@ -19,7 +22,7 @@ namespace StateMachineFramework.Editor {
             ve.RegisterCallback<MouseDownEvent>(OnMouseDown);
             ve.RegisterCallback<MouseUpEvent>(OnMouseUp);
 
-            viewPort.RegisterCallback<MouseMoveEvent>(OnMouseMove);
+            viewPort.RegisterCallback<MouseUpEvent>(OnMouseUp);
             viewPort.RegisterCallback<MouseLeaveEvent>(OnMouseOut);
         }
 
@@ -28,20 +31,37 @@ namespace StateMachineFramework.Editor {
         }
 
         private void OnMouseDown(MouseDownEvent evt) {
-            if (evt.target is NodeVE node) {
-                if (selectedNodes.Contains(node))
-                    if (evt.button == 0) {
-                        isDragging = true;
-                        foreach (var n in selectedNodes)
-                            n.BringToFront();
-                    }
+
+            if (evt.button != 0)
+                return;
+            if (evt.target is not NodeVE node)
+                return;
+
+            if (selectedNodes.Contains(node) || evt.shiftKey)
+                draggedNodes.AddRange(selectedNodes);
+
+            if (!draggedNodes.Contains(node))
+                draggedNodes.Add(node);
+
+            foreach (var n in draggedNodes)
+                n.BringToFront();
+            drag = Vector3.zero;
+
+            viewPort.RegisterCallback<MouseMoveEvent>(OnMouseMove);
+        }
+
+        private void OnMouseMove(MouseMoveEvent evt) {
+            drag += evt.mouseDelta / viewPort.ZoomScale;
+            if (drag.magnitude > dragTreshhold && !IsDragging) {
+                IsDragging = true;
+                foreach (var n in draggedNodes)
+                    n.transform.position += (Vector3)drag;
+
             }
 
-        }
-        private void OnMouseMove(MouseMoveEvent evt) {
-            if (isDragging) {
+            if (IsDragging) {
                 Vector3 translation = evt.mouseDelta / viewPort.ZoomScale;
-                foreach (var n in selectedNodes)
+                foreach (var n in draggedNodes)
                     n.transform.position += translation;
             }
         }
@@ -51,10 +71,13 @@ namespace StateMachineFramework.Editor {
         }
 
         void EndDrag() {
-            if (isDragging) {
-                OnPositionSet?.Invoke();
-                isDragging = false;
+            if (IsDragging) {
+                OnPositionSet?.Invoke(draggedNodes);
+                IsDragging = false;
             }
+            draggedNodes.Clear();
+
+            viewPort.UnregisterCallback<MouseMoveEvent>(OnMouseMove);
         }
 
     }

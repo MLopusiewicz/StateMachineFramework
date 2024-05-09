@@ -1,22 +1,24 @@
 using StateMachineFramework.Runtime;
 using StateMachineFramework.View;
+using System;
 using System.Collections.Generic;
 using UnityEditor;
 using UnityEngine;
 using UnityEngine.UIElements;
+using static UnityEngine.GraphicsBuffer;
 
 namespace StateMachineFramework.Editor {
     public class NodeTreeView {
         public ViewPortVE viewPort;
         public VisualElement nodeContainer;
         public TwoWayDictionary<NodeVE, Node> nodes = new();
-        public Window w;
+        public SMWindow w;
 
         DragController drag;
 
         List<NodeVE> selectedNodes = new();
 
-        public NodeTreeView(Window window) {
+        public NodeTreeView(SMWindow window) {
             viewPort = window.rootVisualElement.Q<ViewPortVE>();
             nodeContainer = viewPort.Q(name: "NodeContainer");
             viewPort.AddManipulator(
@@ -104,12 +106,14 @@ namespace StateMachineFramework.Editor {
             }
 
             n.RegisterCallback<MouseDownEvent>((x) => NodeClicked(x, node));
+            n.RegisterCallback<MouseUpEvent>(NodeSelection);
             drag.NodeAdded(n);
             return n;
         }
 
-        void UpdatePositions() {
-            foreach (var a in selectedNodes) {
+
+        void UpdatePositions(List<NodeVE> sel) {
+            foreach (var a in sel) {
 
                 if (nodes[a] is SpecialNode sn) {
                     var tree = w.serialization.GetSerializedNode(w.depthPanel.ActiveTree);
@@ -166,21 +170,32 @@ namespace StateMachineFramework.Editor {
             if (x.button != 0)
                 return;
 
+        }
+
+        private void NodeSelection(MouseUpEvent x) {
+
+            NodeVE target = x.target as NodeVE;
+
+
             foreach (var a in selectedNodes) {
                 a.RemoveFromClassList("selected");
             }
-
-            if (x.clickCount == 1)
-                if (x.shiftKey) {
-                    if (!selectedNodes.Contains(target)) {
-                        selectedNodes.Add(target);
+            if (drag.IsDragging) {
+                selectedNodes.Clear();
+                selectedNodes.AddRange(drag.draggedNodes);
+            } else {
+                if (x.clickCount == 1)
+                    if (x.shiftKey) {
+                        if (!selectedNodes.Contains(target)) {
+                            selectedNodes.Add(target);
+                        } else {
+                            selectedNodes.Remove(target);
+                        }
                     } else {
-                        selectedNodes.Remove(target);
+                        selectedNodes.Clear();
+                        selectedNodes.Add(target);
                     }
-                } else {
-                    selectedNodes.Clear();
-                    selectedNodes.Add(target);
-                }
+            }
 
             if (selectedNodes.Count == 1)
                 w.nodeInspector.Show(nodes[selectedNodes[0]]);
@@ -192,6 +207,7 @@ namespace StateMachineFramework.Editor {
             }
             w.transitions.ClearSelection();
         }
+
 
         public void ClearSelection() {
 

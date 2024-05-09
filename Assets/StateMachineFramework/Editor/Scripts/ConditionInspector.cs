@@ -15,8 +15,8 @@ namespace StateMachineFramework.Editor {
         VisualElement emptyTransitionError;
 
         Transition displayedTransition;
-        Window w;
-        public ConditionInspector(VisualElement root, Window w) {
+        SMWindow w;
+        public ConditionInspector(VisualElement root, SMWindow w) {
             container = root;
             searchPopup = container.Q<SearchPopupVE>();
             emptyTransitionError = container.Q(name: "AnyStateError");
@@ -27,6 +27,7 @@ namespace StateMachineFramework.Editor {
 
             this.w = w;
         }
+
         public void ShowConditions(Transition transition) {
             displayedTransition = transition;
 
@@ -50,21 +51,24 @@ namespace StateMachineFramework.Editor {
             };
             conditionsList.bindItem = (ve, i) => {
                 var c = ve.Q<ConditionVE>();
-                var p = conditionsList.itemsSource[i] as SerializedProperty;
+                var p = w.serialization.ConditionsList(displayedTransition).GetArrayElementAtIndex(i);
                 c.Init(p, () => ChangeRequested(ve, i));
             };
 
-
-            conditionsList.itemsAdded += OnItemAdded;
+            conditionsList.itemsAdded += Add;
             conditionsList.itemsRemoved += OnItemRemoved;
             conditionsList.itemIndexChanged += OnReordered;
         }
-        private void Add() {
+
+
+        void Add(IEnumerable<int> a) {
+            
             var g = w.serialization.ConditionsList(displayedTransition);
             g.arraySize++;
             UpdateParameter(w.stateMachine.Parameters[0].Key, g.arraySize - 1);
             w.serialization.Apply();
         }
+
         void ChangeRequested(VisualElement ve, int index) {
             searchedIndex = index;
             searchPopup.Show();
@@ -80,27 +84,18 @@ namespace StateMachineFramework.Editor {
         void OnReordered(int arg1, int arg2) {
             w.serialization.ConditionsList(displayedTransition).MoveArrayElement(arg1, arg2);
             w.serialization.Apply();
-
-            conditionsList.itemsSource = w.serialization.TranstionConditions(displayedTransition);
-            conditionsList.RefreshItems();
         }
 
         void OnItemRemoved(IEnumerable<int> enumerable) {
 
-            foreach (int i in enumerable) {
+            List<int> removalList = new List<int>(enumerable);
+            removalList.Reverse();
+            foreach (int i in removalList) {
                 w.serialization.ConditionsList(displayedTransition).DeleteArrayElementAtIndex(i);
             }
-
             w.serialization.Apply();
-            conditionsList.itemsSource = w.serialization.TranstionConditions(displayedTransition);
-            conditionsList.RefreshItems();
         }
 
-        void OnItemAdded(IEnumerable<int> enumerable) {
-            Add();
-            conditionsList.itemsSource = w.serialization.TranstionConditions(displayedTransition);
-            conditionsList.RefreshItems();
-        }
 
         void UpdateParameter(string parmater, int conditionIndex) {
             var param = w.serialization.GetParameter(parmater);
@@ -128,11 +123,11 @@ namespace StateMachineFramework.Editor {
         public void Redraw() {
             ShowConditions(displayedTransition);
         }
+
         public void Clear() {
 
             conditionsList.itemsSource = null;
             conditionsList.RefreshItems();
-
         }
     }
 }

@@ -12,17 +12,17 @@ namespace StateMachineFramework.Editor {
 
         TextField nameField;
         Node selectedNode;
-        Window w;
+        SMWindow w;
         SearchPopupVE searchPopup;
         VisualElement container;
         ListView behaviourList;
         SerializedProperty serializedBehaviours;
         Button addButton;
         Dictionary<string, Type> typeLut;
-        public NodeInspector(Window w) {
+        public NodeInspector(SMWindow w) {
             container = w.rootVisualElement.Q(name: "NodeInspector");
             container.SetDisplay(false);
-            nameField = container.Q<TextField>(); 
+            nameField = container.Q<TextField>();
             this.w = w;
 
             searchPopup = container.Q<SearchPopupVE>();
@@ -96,6 +96,7 @@ namespace StateMachineFramework.Editor {
                 behaviourList.itemsSource = null;
                 return;
             }
+            w.inspector.SetActive(container);
             selectedNode = node;
             var serNode = w.serialization.GetSerializedNode(selectedNode);
             serializedBehaviours = serNode.FindPropertyRelative("behaviours");

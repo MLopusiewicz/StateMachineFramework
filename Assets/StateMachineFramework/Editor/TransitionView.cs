@@ -11,13 +11,13 @@ namespace StateMachineFramework.Editor {
     public class TransitionView {
 
         VisualElement container;
-        Window w;
+        SMWindow w;
 
         Dictionary<Transition, TransitionVE> ves = new();
         Dictionary<TransitionVE, List<Transition>> trans = new();
         List<Transition> selectedTransitions = new();
 
-        public TransitionView(Window w) {
+        public TransitionView(SMWindow w) {
             this.w = w;
             w.rootVisualElement.Q<ViewPortVE>().RegisterCallback<KeyDownEvent>(OnKeyDown);
             container = w.rootVisualElement.Q(name: "LineContainer");

@@ -55,10 +55,11 @@ namespace StateMachineFramework.Editor {
             var transitions = serializedObj.FindProperty("_transitions");
             return GetTransition(a).FindPropertyRelative("conditions");
         }
+
         public List<SerializedProperty> TranstionConditions(Transition a) {
             List<SerializedProperty> vals = new List<SerializedProperty>();
             var table = GetTransition(a).FindPropertyRelative("conditions");
-            for (int i = 0; i < table.arraySize; i++) {
+            for (int i = 0; i < table.arraySize; i++) { 
                 vals.Add(table.GetArrayElementAtIndex(i));
             }
             return vals;

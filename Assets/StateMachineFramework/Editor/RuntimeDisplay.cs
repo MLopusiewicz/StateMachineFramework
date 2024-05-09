@@ -2,9 +2,9 @@
 namespace StateMachineFramework.Editor {
 
     public class RuntimeDisplay {
-        private Window w;
+        private SMWindow w;
 
-        public RuntimeDisplay(Window window) {
+        public RuntimeDisplay(SMWindow window) {
             this.w = window;
 
         }

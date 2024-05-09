@@ -9,10 +9,10 @@ namespace StateMachineFramework.Editor {
         Node target, source;
         TransitionVE pickingLine;
         ViewPortVE viewport;
-        Window w;
+        SMWindow w;
         VisualElement container;
 
-        public TransitionMaker(Window w) {
+        public TransitionMaker(SMWindow w) {
             this.w = w;
             viewport = w.rootVisualElement.Q<ViewPortVE>();
             container = w.rootVisualElement.Q(name: "LineContainer");

@@ -9,9 +9,9 @@ namespace StateMachineFramework.Editor {
         public event Action OnSelectionCleared;
         public event Action<Node> OnNodeSelected;
 
-        Window w;
+        SMWindow w;
 
-        public EditorSelection(Window w) {
+        public EditorSelection(SMWindow w) {
             viewPort = w.rootVisualElement.Q<ViewPortVE>();
             viewPort.RegisterCallback<MouseDownEvent>(OnClicked);
             this.w = w;

@@ -1,35 +1,38 @@
 using StateMachineFramework.Runtime;
+using StateMachineFramework.View;
 using System.Collections.Generic;
 using UnityEngine.UIElements;
 
 namespace StateMachineFramework.Editor {
     public class TransitionInspector {
-        Window w;
+        SMWindow w;
         VisualElement container;
 
         ListView transitionsList;
         Transition activeTransition;
         ConditionInspector conditions;
-
-        public TransitionInspector(Window w) {
+        List<Transition> displayedTransitions;
+        public TransitionInspector(SMWindow w) {
             this.w = w;
             container = w.rootVisualElement.Q(name: "TransitionInspector");
             conditions = new ConditionInspector(container, w);
+            container.SetDisplay(false);
             SetupTransitionsList();
         }
 
         public void Display(List<Transition> transitions) {
+
+            displayedTransitions = transitions;
             if (transitions == null) {
                 this.Clear();
                 return;
             }
             if (transitions.Count > 0) {
+                w.inspector.SetActive(container);
                 conditions.ShowConditions(transitions[0]);
-
                 transitionsList.itemsSource = transitions;
                 transitionsList.Rebuild();
                 transitionsList.SetSelection(0);
-            } else {
             }
         }
 
@@ -56,18 +59,20 @@ namespace StateMachineFramework.Editor {
                     c.AddToClassList("error-label");
             };
             transitionsList.itemsRemoved += TransitionRemoved;
-            transitionsList.Q<Button>(name: "unity-list-view__add-button").SetDisplay(false);
             transitionsList.selectionChanged += TransitionSelected;
+            transitionsList.Q<Button>(name: "unity-list-view__add-button").SetDisplay(false);
 
         }
 
         private void TransitionRemoved(IEnumerable<int> enumerable) {
-            foreach (var a in enumerable)
-                w.serialization.RemoveTransition(transitionsList.itemsSource[a] as Transition);
+            List<int> removal = new List<int>(enumerable);
+            removal.Reverse();
+            foreach (var a in removal)
+                w.serialization.RemoveTransition(displayedTransitions[a]);
 
             w.serialization.Apply();
-            w.transitions.Redraw();
             Redraw();
+            w.transitions.Redraw();
         }
 
         private void TransitionSelected(IEnumerable<object> enumerable) {
