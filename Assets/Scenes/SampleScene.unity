@@ -253,34 +253,36 @@ MonoBehaviour:
   - rid: 7027765085610967127
   - rid: 7027765085610967173
   _parameters:
-  - rid: 7027765085610967138
   - rid: 7027765166010007609
+  - rid: 6660633874549702779
+  - rid: 6660633874549702781
+  - rid: 6660633874549702784
   references:
     version: 2
     RefIds:
-    - rid: 6660633874549702657
-      type: {class: TriggerEquation, ns: StateMachineFramework.Runtime, asm: LoneTower.StateMachineFramework}
-      data: 
-    - rid: 6660633874549702663
-      type: {class: IntEquation, ns: StateMachineFramework.Runtime, asm: LoneTower.StateMachineFramework}
+    - rid: 6660633874549702779
+      type: {class: FloatParameter, ns: StateMachineFramework.Runtime, asm: LoneTower.StateMachineFramework}
       data:
-        type: 0
+        key: New float
         value: 0
-    - rid: 6660633874549702668
-      type: {class: IntEquation, ns: StateMachineFramework.Runtime, asm: LoneTower.StateMachineFramework}
+    - rid: 6660633874549702781
+      type: {class: TriggerParameter, ns: StateMachineFramework.Runtime, asm: LoneTower.StateMachineFramework}
       data:
-        type: 0
+        key: New trigger
         value: 0
-    - rid: 6660633874549702675
-      type: {class: IntEquation, ns: StateMachineFramework.Runtime, asm: LoneTower.StateMachineFramework}
+    - rid: 6660633874549702784
+      type: {class: BoolParameter, ns: StateMachineFramework.Runtime, asm: LoneTower.StateMachineFramework}
       data:
-        type: 0
+        key: New boolean
         value: 0
-    - rid: 6660633874549702678
-      type: {class: DebugState, ns: StateMachineFramework.Runtime, asm: LoneTower.StateMachineFramework}
+    - rid: 6660633874549702849
+      type: {class: Transition, ns: StateMachineFramework.Runtime, asm: LoneTower.StateMachineFramework}
       data:
-        referenceToSomething: {fileID: 0}
-        cos: 0
+        source:
+          rid: 7027765085610967127
+        target:
+          rid: 7027765085610967126
+        conditions: []
     - rid: 7027765085610967124
       type: {class: TreeNode, ns: StateMachineFramework.Runtime, asm: LoneTower.StateMachineFramework}
       data:
@@ -292,14 +294,14 @@ MonoBehaviour:
         - rid: 7027765085610967126
         - rid: 7027765085610967127
         - rid: 7027765085610967173
-        enterPos: {x: -148.50253, y: 53.93586}
-        exitPos: {x: 81.29962, y: 57.17804}
-        anyPos: {x: -230.02638, y: 175.37666}
+        enterPos: {x: -38.502533, y: 62.602516}
+        exitPos: {x: 150.63306, y: 61.84471}
+        anyPos: {x: -85.69642, y: 181.56218}
     - rid: 7027765085610967125
       type: {class: SpecialNode, ns: StateMachineFramework.Runtime, asm: LoneTower.StateMachineFramework}
       data:
         name: Any State
-        position: {x: -230.02638, y: 175.37666}
+        position: {x: -85.69642, y: 181.56218}
         behaviours: []
         _transitions:
         - rid: 7027765085610967128
@@ -309,10 +311,9 @@ MonoBehaviour:
       type: {class: Node, ns: StateMachineFramework.Runtime, asm: LoneTower.StateMachineFramework}
       data:
         name: new node
-        position: {x: 6.8231244, y: 376.24182}
+        position: {x: 46.823185, y: 374.90848}
         behaviours: []
-        _transitions:
-        - rid: 7027765085610967134
+        _transitions: []
     - rid: 7027765085610967127
       type: {class: TreeNode, ns: StateMachineFramework.Runtime, asm: LoneTower.StateMachineFramework}
       data:
@@ -320,7 +321,8 @@ MonoBehaviour:
         position: {x: -86.98065, y: 280.95593}
         behaviours:
         - rid: 7027765085610967133
-        _transitions: []
+        _transitions:
+        - rid: 6660633874549702849
         nodes: []
         enterPos: {x: 0, y: 200}
         exitPos: {x: 500, y: 200}
@@ -342,22 +344,6 @@ MonoBehaviour:
       data:
         referenceToSomething: {fileID: 0}
         amoutn: 0
-    - rid: 7027765085610967134
-      type: {class: Transition, ns: StateMachineFramework.Runtime, asm: LoneTower.StateMachineFramework}
-      data:
-        source:
-          rid: 7027765085610967126
-        target:
-          rid: 7027765085610967127
-        conditions:
-        - parameter:
-            rid: 7027765085610967179
-          equation:
-            rid: 7027765085610967180
-        - parameter:
-            rid: 7027765085610967178
-          equation:
-            rid: 7027765085610967181
     - rid: 7027765085610967138
       type: {class: TriggerParameter, ns: StateMachineFramework.Runtime, asm: LoneTower.StateMachineFramework}
       data:
@@ -374,10 +360,7 @@ MonoBehaviour:
         behaviours:
         - rid: 7027765085610967174
         - rid: 7027765166010007555
-        - rid: 7027765166010007556
-        - rid: 6660633874549702678
-        _transitions:
-        - rid: 7027765166010007799
+        _transitions: []
         nodes: []
         enterPos: {x: 0, y: 200}
         exitPos: {x: 500, y: 200}
@@ -387,64 +370,16 @@ MonoBehaviour:
       data:
         referenceToSomething: {fileID: 0}
         cos: 0
-    - rid: 7027765085610967178
-      type: {class: FloatParameter, ns: StateMachineFramework.Runtime, asm: LoneTower.StateMachineFramework}
-      data:
-        key: New float
-        value: 0
-    - rid: 7027765085610967179
-      type: {class: BoolParameter, ns: StateMachineFramework.Runtime, asm: LoneTower.StateMachineFramework}
-      data:
-        key: New boolean
-        value: 0
-    - rid: 7027765085610967180
-      type: {class: BoolEquation, ns: StateMachineFramework.Runtime, asm: LoneTower.StateMachineFramework}
-      data:
-        value: 0
-    - rid: 7027765085610967181
-      type: {class: FloatEquation, ns: StateMachineFramework.Runtime, asm: LoneTower.StateMachineFramework}
-      data:
-        type: 0
-        value: 0
     - rid: 7027765166010007555
       type: {class: SomeState, ns: StateMachineFramework.Runtime, asm: LoneTower.StateMachineFramework}
       data:
         referenceToSomething: {fileID: 0}
         amoutn: 0
-    - rid: 7027765166010007556
-      type: {class: DebugState, ns: StateMachineFramework.Runtime, asm: LoneTower.StateMachineFramework}
-      data:
-        referenceToSomething: {fileID: 0}
-        cos: 0
     - rid: 7027765166010007609
       type: {class: IntParameter, ns: StateMachineFramework.Runtime, asm: LoneTower.StateMachineFramework}
       data:
         key: New int
         value: 46
-    - rid: 7027765166010007799
-      type: {class: Transition, ns: StateMachineFramework.Runtime, asm: LoneTower.StateMachineFramework}
-      data:
-        source:
-          rid: 7027765085610967173
-        target:
-          rid: 7027765085610967126
-        conditions:
-        - parameter:
-            rid: 7027765166010007609
-          equation:
-            rid: 6660633874549702663
-        - parameter:
-            rid: 7027765085610967138
-          equation:
-            rid: 6660633874549702657
-        - parameter:
-            rid: 7027765166010007609
-          equation:
-            rid: 6660633874549702675
-        - parameter:
-            rid: 7027765166010007609
-          equation:
-            rid: 6660633874549702668
 --- !u!4 &784380250
 Transform:
   m_ObjectHideFlags: 0

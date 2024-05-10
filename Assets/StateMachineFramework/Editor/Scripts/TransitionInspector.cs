@@ -1,17 +1,21 @@
 using StateMachineFramework.Runtime;
 using StateMachineFramework.View;
 using System.Collections.Generic;
+using System.Runtime.Serialization;
+using UnityEditor;
 using UnityEngine.UIElements;
 
 namespace StateMachineFramework.Editor {
     public class TransitionInspector {
+
+        public ConditionInspector conditions;
+
         SMWindow w;
         VisualElement container;
 
         ListView transitionsList;
-        Transition activeTransition;
-        ConditionInspector conditions;
         List<Transition> displayedTransitions;
+
         public TransitionInspector(SMWindow w) {
             this.w = w;
             container = w.rootVisualElement.Q(name: "TransitionInspector");
@@ -67,12 +71,14 @@ namespace StateMachineFramework.Editor {
         private void TransitionRemoved(IEnumerable<int> enumerable) {
             List<int> removal = new List<int>(enumerable);
             removal.Reverse();
-            foreach (var a in removal)
+            foreach (var a in removal) {
                 w.serialization.RemoveTransition(displayedTransitions[a]);
+                w.serialization.Apply();
+            }
 
-            w.serialization.Apply();
-            Redraw();
+
             w.transitions.Redraw();
+            //Redraw();
         }
 
         private void TransitionSelected(IEnumerable<object> enumerable) {
@@ -84,13 +90,7 @@ namespace StateMachineFramework.Editor {
 
         public void Redraw() {
 
-            List<Transition> transitions = new List<Transition>();
-            if (activeTransition != null)
-                foreach (var a in activeTransition.source.transitions) {
-                    if (a.target == activeTransition.target)
-                        transitions.Add(a);
-                }
-            Display(transitions);
+            Display(w.selection.transitions.GetItems());
 
         }
     }

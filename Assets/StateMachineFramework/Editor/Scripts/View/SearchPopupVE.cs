@@ -54,13 +54,11 @@ namespace StateMachineFramework.View {
 
 
         public void Show() {
-            //this.SetDisplay(true);
             this.visible = true;
             searchBar.Focus();
         }
         public void Hide() {
             this.visible = false;
-            //this.SetDisplay(false);
         }
 
         void Redraw() {

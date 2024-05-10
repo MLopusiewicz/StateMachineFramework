@@ -58,7 +58,7 @@ namespace StateMachineFramework.Runtime {
             OnChanged += action;
             action?.Invoke(value);
         }
-         
+
         public void SetValue(T v) {
             this.Value = v;
         }
@@ -69,9 +69,9 @@ namespace StateMachineFramework.Runtime {
 
         public override string ToString() {
             if (value != null)
-                return $"Parameter<{typeof(T).Name}>: {value}";
+                return $"{key}<{typeof(T).Name}>: {value}";
             else
-                return $"Parameter<{typeof(T).Name}>: NULL";
+                return $"{key}<{typeof(T).Name}>: NULL";
         }
 
         public static implicit operator T(Parameter<T> d) => d.Value;

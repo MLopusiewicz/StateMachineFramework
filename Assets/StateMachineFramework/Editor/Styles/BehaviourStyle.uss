@@ -3,7 +3,7 @@
     width: 20px;
     flex-grow: 0;
     flex-shrink: 0;
-    background-image: var(--unity-icons-pane_options);
+    background-image: var(--unity-icons-window_button_restore);
     height: 20px;
 }
 

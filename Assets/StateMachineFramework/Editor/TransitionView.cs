@@ -15,7 +15,8 @@ namespace StateMachineFramework.Editor {
 
         Dictionary<Transition, TransitionVE> ves = new();
         Dictionary<TransitionVE, List<Transition>> trans = new();
-        List<Transition> selectedTransitions = new();
+        //List<Transition> selectedTransitions = new();
+        SerializedSelection<Transition> selection => w.selection.transitions;
 
         public TransitionView(SMWindow w) {
             this.w = w;
@@ -27,10 +28,9 @@ namespace StateMachineFramework.Editor {
         }
 
         public void ClearSelection() {
-            foreach (var a in selectedTransitions)
+            foreach (var a in selection.GetItems())
                 ves[a].RemoveFromClassList("selected");
-            selectedTransitions.Clear();
-
+            selection.Clear();
             w.transitionInspector.Clear();
         }
 
@@ -44,7 +44,6 @@ namespace StateMachineFramework.Editor {
             container.Clear();
             ves.Clear();
             trans.Clear();
-            selectedTransitions.Clear();
 
             foreach (var transition in w.stateMachine.anyState.transitions) {
                 if (w.depthPanel.IsInScope(transition.target))
@@ -66,6 +65,8 @@ namespace StateMachineFramework.Editor {
                     }
                 }
             }
+
+            DrawSelection(); 
         }
 
         public void Clear() {
@@ -76,7 +77,7 @@ namespace StateMachineFramework.Editor {
 
         void OnKeyDown(KeyDownEvent evt) {
             if (evt.keyCode == KeyCode.Delete) {
-                foreach (var a in selectedTransitions)
+                foreach (var a in selection.GetItems())
                     w.serialization.RemoveTransition(a);
                 w.serialization.Apply();
                 Redraw();
@@ -136,28 +137,31 @@ namespace StateMachineFramework.Editor {
         void TransitionClicked(MouseDownEvent x, TransitionVE vE) {
             if (x.button != 0)
                 return;
-            foreach (var a in selectedTransitions)
+            foreach (var a in selection.GetItems())
                 ves[a].RemoveFromClassList("selected");
 
             if (x.shiftKey) {
                 foreach (var a in trans[vE]) {
-                    if (selectedTransitions.Contains(a))
-                        selectedTransitions.Remove(a);
+                    if (selection.Contains(a))
+                        selection.Remove(a);
                     else
-                        selectedTransitions.Add(a);
+                        selection.Add(a);
                 }
             } else {
-                selectedTransitions.Clear();
+                selection.Clear();
                 foreach (var a in trans[vE]) {
-                    selectedTransitions.Add(a);
+                    selection.Add(a);
                 }
             }
 
-            foreach (var a in selectedTransitions)
-                ves[a].AddToClassList("selected");
-            w.transitionInspector.Display(selectedTransitions);
+            DrawSelection();
+            w.transitionInspector.Display(selection.GetItems());
 
             w.nodeView.ClearSelection();
+        }
+        void DrawSelection() {
+            foreach (var a in selection.GetItems())
+                ves[a].AddToClassList("selected");
         }
 
         void RemoveTransition(Transition t) {

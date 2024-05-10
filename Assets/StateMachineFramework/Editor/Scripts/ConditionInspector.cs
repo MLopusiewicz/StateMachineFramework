@@ -74,14 +74,13 @@ namespace StateMachineFramework.Editor {
             searchedIndex = index;
             searchPopup.Show();
             var allignTarget = ve.Q<Button>();
-            //var g = ve.LocalToWorld(Vector2.zero); 
+
             searchPopup.transform.position = ve.parent.parent.layout.position;
             searchPopup.transform.position += Vector3.up * searchPopup.layout.height;
-            searchPopup.transform.position += Vector3.right * 33;
-            //-  + Vector2.right * 25;
-            searchPopup.style.width = ve.layout.width;
-            //searchPopup.transform.position = Vector2.one * 200;
-            //searchPopup.position = ve.localBound.position + Vector2.up * ve.localBound.height;
+            searchPopup.transform.position += Vector3.right * 33; 
+
+            searchPopup.style.width = ve.layout.width; 
+
             searchPopup.OnEntrySelected += ApplyChange;
         }
 

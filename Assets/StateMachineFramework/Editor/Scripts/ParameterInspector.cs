@@ -45,16 +45,12 @@ namespace StateMachineFramework.Editor {
             ListSetup();
 
         }
-        void SubstituteFooterAddButton() {
-            addDropdown = new DropdownField();
-            addDropdown.AddToClassList("parameter-add-dropdown");
-            tab.Q(name: "unity-list-view__footer").Add(addDropdown);
-            addDropdown.choices = new List<string> { "Trigger", "Int", "Float", "Bool" };
-            addDropdown.SetValueWithoutNotify("+");
 
-            addDropdown.RegisterCallback<ChangeEvent<string>>(DropdownSelected);
-            tab.Q<Button>(name: "unity-list-view__add-button").SetDisplay(false);
+        public void Init() {
+            paramVE.Clear();
+            RefreshList();
         }
+
 
         void ListSetup() {
             paramList = tab.Q<ListView>();
@@ -74,7 +70,18 @@ namespace StateMachineFramework.Editor {
             paramList.itemsRemoved += Removed;
         }
 
-        private void Removed(IEnumerable<int> enumerable) {
+        void SubstituteFooterAddButton() {
+            addDropdown = new DropdownField();
+            addDropdown.AddToClassList("parameter-add-dropdown");
+            tab.Q(name: "unity-list-view__footer").Add(addDropdown);
+            addDropdown.choices = new List<string> { "Trigger", "Int", "Float", "Bool" };
+            addDropdown.SetValueWithoutNotify("+");
+
+            addDropdown.RegisterCallback<ChangeEvent<string>>(DropdownSelected);
+            tab.Q<Button>(name: "unity-list-view__add-button").SetDisplay(false);
+        }
+
+        void Removed(IEnumerable<int> enumerable) {
 
             List<int> indexes = new(enumerable);
             indexes.Reverse();
@@ -82,6 +89,7 @@ namespace StateMachineFramework.Editor {
                 w.serialization.RemoveParameter(i);
             }
             w.serialization.Apply();
+            w.transitionInspector.Redraw();
         }
 
         void OnReordered(int arg1, int arg2) {
@@ -89,7 +97,7 @@ namespace StateMachineFramework.Editor {
             RefreshList();
         }
 
-        private void DropdownSelected(ChangeEvent<string> evt) {
+        void DropdownSelected(ChangeEvent<string> evt) {
             addDropdown.SetValueWithoutNotify("+");
             IParameter parameter = new TriggerParameter("New trigger", false);
             switch (evt.newValue) {
@@ -103,11 +111,11 @@ namespace StateMachineFramework.Editor {
                     parameter = new IntParameter("New int", 0);
                     break;
             }
-
             var serializedField = w.serialization.AddElement("_parameters");
             serializedField.managedReferenceValue = parameter;
             w.serialization.Apply();
-            RefreshList();
+            w.transitionInspector.conditions.Redraw();
+            RefreshList(); 
         }
 
         void SetupMenu() {
@@ -120,7 +128,7 @@ namespace StateMachineFramework.Editor {
             }
         }
 
-        private void ToggleParameter(DropdownMenuAction x, ParameterType p) {
+        void ToggleParameter(DropdownMenuAction x, ParameterType p) {
             if (visibleParams.HasFlag(p))
                 visibleParams &= ~p;
             else {
@@ -130,16 +138,11 @@ namespace StateMachineFramework.Editor {
             Redraw();
         }
 
-        private void ToggleTab() {
+        void ToggleTab() {
             tab.EnableInClassList("hidden", tabVisible ^= true);
         }
 
-        public void Init() {
-            paramVE.Clear();
-            RefreshList();
-        }
-
-        private void SearchBarChanged(ChangeEvent<string> evt) {
+        void SearchBarChanged(ChangeEvent<string> evt) {
             Redraw();
         }
 
@@ -147,23 +150,14 @@ namespace StateMachineFramework.Editor {
             ParameterType search = visibleParams;
             string searchString = searchBar.value;
 
-            if (searchBar.value.StartsWith("t:")) {
-                search = ParameterType.Trigger;
-                searchString = searchString.Remove(0, 2);
+            foreach (var a in (ParameterType[])Enum.GetValues(typeof(ParameterType))) {
+                var z = a.ToString().ToLower()[0];
+                if (searchBar.value.StartsWith($"{z}:")) {
+                    search = a;
+                    searchString = searchString.Remove(0, 2);
+                    break;
+                }
             }
-            if (searchBar.value.StartsWith("f:")) {
-                search = ParameterType.Float;
-                searchString = searchString.Remove(0, 2);
-            }
-            if (searchBar.value.StartsWith("i:")) {
-                search = ParameterType.Int;
-                searchString = searchString.Remove(0, 2);
-            }
-            if (searchBar.value.StartsWith("b:")) {
-                search = ParameterType.Bool;
-                searchString = searchString.Remove(0, 2);
-            }
-
 
             for (int i = 0; i < w.stateMachine.Parameters.Count; i++) {
                 var param = w.stateMachine.Parameters[i];
@@ -181,7 +175,7 @@ namespace StateMachineFramework.Editor {
             paramList.Rebuild();
         }
 
-        internal void Clear() {
+        public void Clear() {
         }
     }
 }

@@ -1,3 +1,4 @@
+using Codice.Client.BaseCommands;
 using StateMachineFramework.Runtime;
 using System;
 using System.Collections.Generic;
@@ -59,7 +60,7 @@ namespace StateMachineFramework.Editor {
         public List<SerializedProperty> TranstionConditions(Transition a) {
             List<SerializedProperty> vals = new List<SerializedProperty>();
             var table = GetTransition(a).FindPropertyRelative("conditions");
-            for (int i = 0; i < table.arraySize; i++) { 
+            for (int i = 0; i < table.arraySize; i++) {
                 vals.Add(table.GetArrayElementAtIndex(i));
             }
             return vals;
@@ -169,6 +170,22 @@ namespace StateMachineFramework.Editor {
         }
 
         public void RemoveParameter(int index) {
+            var param = serializedObj.FindProperty("_parameters").GetArrayElementAtIndex(index).managedReferenceValue;
+
+            var nodes = serializedObj.FindProperty("_nodes");
+            for (int i = nodes.arraySize - 1; i >= 0; i--) {
+                var transitions = nodes.GetArrayElementAtIndex(i).FindPropertyRelative("_transitions");
+                for (int j = transitions.arraySize - 1; j >= 0; j--) {
+                    var conditions = transitions.GetArrayElementAtIndex(j).FindPropertyRelative("conditions");
+                    for (int k = conditions.arraySize - 1; k >= 0; k--) {
+                        var p = conditions.GetArrayElementAtIndex(k).FindPropertyRelative("parameter").managedReferenceValue;
+                        if (param == p)
+                            conditions.DeleteArrayElementAtIndex(k);
+                    }
+                }
+
+            }
+
             serializedObj.FindProperty("_parameters").DeleteArrayElementAtIndex(index);
         }
 
