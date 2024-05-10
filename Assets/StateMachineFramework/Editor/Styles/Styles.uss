@@ -47,7 +47,17 @@
 #InspectorTab {
     background-color: var(--unity-colors-window-background);
     border-left-width: 1px;
-    border-left-color: var(--unity-colors-window-border);
+    border-left-color: var(--unity-colors-app_toolbar_button-border);
+    border-top-width: 0;
+    border-right-width: 0;
+    border-bottom-width: 1px;
+    border-right-color: rgb(0, 0, 0);
+    border-top-color: rgb(0, 0, 0);
+    border-bottom-color: var(--unity-colors-app_toolbar_button-border);
+    right: 0;
+    top: 0;
+    position: absolute;
+    border-bottom-left-radius: 20px;
 }
 
 .transition-anchor.selected .transition-line {
@@ -76,10 +86,10 @@
     right: -200%;
     bottom: -200%;
     --grid-gap: 160;
-    --grid-divisions: 5;
-    --major-line__width: 2;
+    --grid-divisions: 10;
+    --major-line__width: 0.6;
     --major-line__color: var(--unity-colors-tooltip-border);
-    --minor-line__width: 0.5;
+    --minor-line__width: 0.2;
     --minor-line__color: var(--unity-colors-tooltip-border);
     background-color: var(--unity-colors-default-background);
 }

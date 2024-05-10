@@ -38,6 +38,7 @@ namespace StateMachineFramework.Editor {
         public EditorSelection selection;
         public InspectorWindow inspector;
         public RuntimeDisplay runtime;
+
         public bool isRuntime = false;
         public void HardInit(StateMachine sm) {
             this.titleContent = new GUIContent(sm.gameObject.name, this.icon);
@@ -121,16 +122,20 @@ namespace StateMachineFramework.Editor {
     }
     public class InspectorWindow {
         public VisualElement activeTab;
+        VisualElement inspectorTab;
         public InspectorWindow(SMWindow window) {
             window.selection.OnSelectionCleared += Clear;
+            inspectorTab = window.rootVisualElement.Q("InspectorTab");
         }
 
         private void Clear() {
+            inspectorTab.SetDisplay(false);
             activeTab?.SetDisplay(false);
             activeTab = null;
         }
 
         public void SetActive(VisualElement tab) {
+            inspectorTab.SetDisplay(true);
             activeTab?.SetDisplay(false);
             activeTab = tab;
             tab.SetDisplay(true);

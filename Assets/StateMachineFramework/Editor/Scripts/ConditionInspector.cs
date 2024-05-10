@@ -3,6 +3,7 @@ using StateMachineFramework.View;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEditor;
+using UnityEngine;
 using UnityEngine.UIElements;
 
 namespace StateMachineFramework.Editor {
@@ -62,7 +63,7 @@ namespace StateMachineFramework.Editor {
 
 
         void Add(IEnumerable<int> a) {
-            
+
             var g = w.serialization.ConditionsList(displayedTransition);
             g.arraySize++;
             UpdateParameter(w.stateMachine.Parameters[0].Key, g.arraySize - 1);
@@ -73,7 +74,14 @@ namespace StateMachineFramework.Editor {
             searchedIndex = index;
             searchPopup.Show();
             var allignTarget = ve.Q<Button>();
-            searchPopup.transform.position = ve.localBound.position;// + Vector2.up * ve.localBound.height;
+            //var g = ve.LocalToWorld(Vector2.zero); 
+            searchPopup.transform.position = ve.parent.parent.layout.position;
+            searchPopup.transform.position += Vector3.up * searchPopup.layout.height;
+            searchPopup.transform.position += Vector3.right * 33;
+            //-  + Vector2.right * 25;
+            searchPopup.style.width = ve.layout.width;
+            //searchPopup.transform.position = Vector2.one * 200;
+            //searchPopup.position = ve.localBound.position + Vector2.up * ve.localBound.height;
             searchPopup.OnEntrySelected += ApplyChange;
         }
 

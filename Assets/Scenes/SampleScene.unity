@@ -258,6 +258,29 @@ MonoBehaviour:
   references:
     version: 2
     RefIds:
+    - rid: 6660633874549702657
+      type: {class: TriggerEquation, ns: StateMachineFramework.Runtime, asm: LoneTower.StateMachineFramework}
+      data: 
+    - rid: 6660633874549702663
+      type: {class: IntEquation, ns: StateMachineFramework.Runtime, asm: LoneTower.StateMachineFramework}
+      data:
+        type: 0
+        value: 0
+    - rid: 6660633874549702668
+      type: {class: IntEquation, ns: StateMachineFramework.Runtime, asm: LoneTower.StateMachineFramework}
+      data:
+        type: 0
+        value: 0
+    - rid: 6660633874549702675
+      type: {class: IntEquation, ns: StateMachineFramework.Runtime, asm: LoneTower.StateMachineFramework}
+      data:
+        type: 0
+        value: 0
+    - rid: 6660633874549702678
+      type: {class: DebugState, ns: StateMachineFramework.Runtime, asm: LoneTower.StateMachineFramework}
+      data:
+        referenceToSomething: {fileID: 0}
+        cos: 0
     - rid: 7027765085610967124
       type: {class: TreeNode, ns: StateMachineFramework.Runtime, asm: LoneTower.StateMachineFramework}
       data:
@@ -270,13 +293,13 @@ MonoBehaviour:
         - rid: 7027765085610967127
         - rid: 7027765085610967173
         enterPos: {x: -148.50253, y: 53.93586}
-        exitPos: {x: 430.66663, y: -23.834602}
-        anyPos: {x: -200.46661, y: 186.69742}
+        exitPos: {x: 81.29962, y: 57.17804}
+        anyPos: {x: -230.02638, y: 175.37666}
     - rid: 7027765085610967125
       type: {class: SpecialNode, ns: StateMachineFramework.Runtime, asm: LoneTower.StateMachineFramework}
       data:
         name: Any State
-        position: {x: -200.46661, y: 186.69742}
+        position: {x: -230.02638, y: 175.37666}
         behaviours: []
         _transitions:
         - rid: 7027765085610967128
@@ -286,7 +309,7 @@ MonoBehaviour:
       type: {class: Node, ns: StateMachineFramework.Runtime, asm: LoneTower.StateMachineFramework}
       data:
         name: new node
-        position: {x: 180.83069, y: 607.0036}
+        position: {x: 6.8231244, y: 376.24182}
         behaviours: []
         _transitions:
         - rid: 7027765085610967134
@@ -294,7 +317,7 @@ MonoBehaviour:
       type: {class: TreeNode, ns: StateMachineFramework.Runtime, asm: LoneTower.StateMachineFramework}
       data:
         name: Tree
-        position: {x: -71.95456, y: 480.69092}
+        position: {x: -86.98065, y: 280.95593}
         behaviours:
         - rid: 7027765085610967133
         _transitions: []
@@ -347,11 +370,12 @@ MonoBehaviour:
       type: {class: TreeNode, ns: StateMachineFramework.Runtime, asm: LoneTower.StateMachineFramework}
       data:
         name: ASD
-        position: {x: 484.44922, y: 483.7788}
+        position: {x: 182.03522, y: 280.37415}
         behaviours:
         - rid: 7027765085610967174
         - rid: 7027765166010007555
         - rid: 7027765166010007556
+        - rid: 6660633874549702678
         _transitions:
         - rid: 7027765166010007799
         nodes: []
@@ -404,7 +428,23 @@ MonoBehaviour:
           rid: 7027765085610967173
         target:
           rid: 7027765085610967126
-        conditions: []
+        conditions:
+        - parameter:
+            rid: 7027765166010007609
+          equation:
+            rid: 6660633874549702663
+        - parameter:
+            rid: 7027765085610967138
+          equation:
+            rid: 6660633874549702657
+        - parameter:
+            rid: 7027765166010007609
+          equation:
+            rid: 6660633874549702675
+        - parameter:
+            rid: 7027765166010007609
+          equation:
+            rid: 6660633874549702668
 --- !u!4 &784380250
 Transform:
   m_ObjectHideFlags: 0
@@ -512,71 +552,10 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!1 &1034022851
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 1034022853}
-  - component: {fileID: 1034022854}
-  m_Layer: 0
-  m_Name: GameObject
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &1034022853
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1034022851}
-  serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 30.515171, y: -14.962983, z: -7.8629403}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 0}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &1034022854
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1034022851}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e3b96bdf9df6dba44aa90741441cf253, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _nodes:
-  - rid: -2
-  - rid: -2
-  - rid: -2
-  - rid: -2
-  - rid: -2
-  - rid: -2
-  - rid: -2
-  - rid: -2
-  _parameters:
-  - rid: -2
-  references:
-    version: 2
-    RefIds:
-    - rid: -2
-      type: {class: , ns: , asm: }
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0
   m_Roots:
   - {fileID: 963194228}
   - {fileID: 705507995}
-  - {fileID: 1034022853}
   - {fileID: 784380250}
