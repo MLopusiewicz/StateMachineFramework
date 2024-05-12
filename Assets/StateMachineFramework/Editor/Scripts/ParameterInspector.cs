@@ -11,12 +11,13 @@ namespace StateMachineFramework.Editor {
     public class ParameterInspector {
 
 
+        public Action<IParameter> ValueChanged;
+
         VisualElement tab;
         bool tabVisible = false;
-        private SMWindow w;
+        StateMachineEditor editor;
         ToolbarPopupSearchField searchBar;
         Dictionary<IParameter, VisualElement> paramVE = new();
-        public Action<IParameter> ValueChanged;
         DropdownField addDropdown;
         ListView paramList;
         Button tabButton;
@@ -30,13 +31,13 @@ namespace StateMachineFramework.Editor {
         {typeof(BoolParameter), ParameterType.Bool},
     };
 
-        public ParameterInspector(SMWindow window) {
+        public ParameterInspector(StateMachineEditor window) {
             tabButton = window.rootVisualElement.Q<Button>(name: "ParameterTabButton");
             tabButton.clicked += ToggleTab;
             tab = window.rootVisualElement.Q(name: "ParameterTab");
             searchBar = tab.Q<ToolbarPopupSearchField>();
 
-            this.w = window;
+            this.editor = window;
             searchBar.RegisterCallback<ChangeEvent<string>>(SearchBarChanged);
 
             SubstituteFooterAddButton();
@@ -60,8 +61,8 @@ namespace StateMachineFramework.Editor {
             };
             paramList.bindItem = (ve, index) => {
                 var v = ve.Q<ParameterVE>();
-                if (!w.isRuntime)
-                    v.Init(w.serialization.GetParameter(index));
+                if (!editor.isRuntime)
+                    v.Init(editor.serialization.GetParameter(index));
                 else
                     v.InitRuntime(paramList.itemsSource[index] as IParameter);
             };
@@ -86,14 +87,14 @@ namespace StateMachineFramework.Editor {
             List<int> indexes = new(enumerable);
             indexes.Reverse();
             foreach (var i in indexes) {
-                w.serialization.RemoveParameter(i);
+                editor.serialization.RemoveParameter(i);
             }
-            w.serialization.Apply();
-            w.transitionInspector.Redraw();
+            editor.serialization.Apply();
+            editor.transitionInspector.Redraw();
         }
 
         void OnReordered(int arg1, int arg2) {
-            w.serialization.ChangeParmaterIndex(arg1, arg2);
+            editor.serialization.ChangeParmaterIndex(arg1, arg2);
             RefreshList();
         }
 
@@ -111,11 +112,11 @@ namespace StateMachineFramework.Editor {
                     parameter = new IntParameter("New int", 0);
                     break;
             }
-            var serializedField = w.serialization.AddElement("_parameters");
+            var serializedField = editor.serialization.AddElement("_parameters");
             serializedField.managedReferenceValue = parameter;
-            w.serialization.Apply();
-            w.transitionInspector.conditions.Redraw();
-            RefreshList(); 
+            editor.serialization.Apply();
+            editor.transitionInspector.conditions.Redraw();
+            RefreshList();
         }
 
         void SetupMenu() {
@@ -159,8 +160,8 @@ namespace StateMachineFramework.Editor {
                 }
             }
 
-            for (int i = 0; i < w.stateMachine.Parameters.Count; i++) {
-                var param = w.stateMachine.Parameters[i];
+            for (int i = 0; i < editor.stateMachine.Parameters.Count; i++) {
+                var param = editor.stateMachine.Parameters[i];
                 var t = paramTypeLUT[param.GetType()];
                 if (param.Key.Contains(searchString) && search.HasFlag(t)) {
                     paramList.GetRootElementForIndex(i).SetDisplay(true);
@@ -171,7 +172,7 @@ namespace StateMachineFramework.Editor {
         }
 
         void RefreshList() {
-            paramList.itemsSource = new List<IParameter>(w.stateMachine.Parameters);
+            paramList.itemsSource = new List<IParameter>(editor.stateMachine.Parameters);
             paramList.Rebuild();
         }
 

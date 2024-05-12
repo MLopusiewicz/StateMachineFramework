@@ -1,19 +1,23 @@
 using StateMachineFramework.Runtime;
 using System;
 using System.Collections.Generic;
+using UnityEditor;
 using UnityEngine.UIElements;
 
 namespace StateMachineFramework.Editor {
     public class DepthPanel {
-        SMWindow w;
+
+        public Action<TreeNode> OnDepthChanged; 
+        public TreeNode ActiveTree => depth[^1];
+
+        StateMachineEditor w;
         List<TreeNode> depth = new();
+        //List<SerializedProperty> depth = new List<SerializedProperty>();
         Dictionary<TreeNode, VisualElement> nodeButtons = new();
         VisualElement container;
-        public Action<TreeNode> OnDepthChanged;
-        public TreeNode ActiveTree => depth[^1];
         VisualElement depthContainer;
 
-        public DepthPanel(SMWindow w) {
+        public DepthPanel(StateMachineEditor w) {
             this.w = w;
             container = w.rootVisualElement.Q(name: "DepthPanel");
             depthContainer = container.Q(name: "DepthContainer");

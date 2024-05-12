@@ -1,9 +1,6 @@
-﻿using GluonGui;
-using StateMachineFramework.Runtime;
+﻿using StateMachineFramework.Runtime;
 using StateMachineFramework.View;
 using System.Collections.Generic;
-using System.ComponentModel;
-using UnityEditor;
 using UnityEngine;
 using UnityEngine.UIElements;
 namespace StateMachineFramework.Editor {
@@ -11,27 +8,26 @@ namespace StateMachineFramework.Editor {
     public class TransitionView {
 
         VisualElement container;
-        SMWindow w;
+        StateMachineEditor editor;
 
         Dictionary<Transition, TransitionVE> ves = new();
         Dictionary<TransitionVE, List<Transition>> trans = new();
         //List<Transition> selectedTransitions = new();
-        SerializedSelection<Transition> selection => w.selection.transitions;
+        SerializedSelection<Transition> selection => editor.selection.transitions;
 
-        public TransitionView(SMWindow w) {
-            this.w = w;
-            w.rootVisualElement.Q<ViewPortVE>().RegisterCallback<KeyDownEvent>(OnKeyDown);
-            container = w.rootVisualElement.Q(name: "LineContainer");
-            w.depthPanel.OnDepthChanged += (t) => Redraw();
-            w.selection.OnSelectionCleared += ClearSelection;
-            Undo.undoRedoPerformed += Redraw;
+        public TransitionView(StateMachineEditor editor) {
+            this.editor = editor;
+            editor.rootVisualElement.Q<ViewPortVE>().RegisterCallback<KeyDownEvent>(OnKeyDown);
+            container = editor.rootVisualElement.Q(name: "LineContainer");
+            editor.depthPanel.OnDepthChanged += (t) => Redraw();
+            editor.selection.OnSelectionCleared += ClearSelection; 
         }
 
         public void ClearSelection() {
             foreach (var a in selection.GetItems())
                 ves[a].RemoveFromClassList("selected");
             selection.Clear();
-            w.transitionInspector.Clear();
+            editor.transitionInspector.Clear();
         }
 
         public void Update() {
@@ -45,28 +41,28 @@ namespace StateMachineFramework.Editor {
             ves.Clear();
             trans.Clear();
 
-            foreach (var transition in w.stateMachine.anyState.transitions) {
-                if (w.depthPanel.IsInScope(transition.target))
+            foreach (var transition in editor.stateMachine.anyState.transitions) {
+                if (editor.depthPanel.IsInScope(transition.target))
                     CreateTransition(transition);
             }
 
-            foreach (var transition in w.depthPanel.ActiveTree.transitions)
-                if (w.depthPanel.IsInScope(transition.target))
-                    CreateTransition(transition, w.depthPanel.ActiveTree.enterNode, transition.target);
+            foreach (var transition in editor.depthPanel.ActiveTree.transitions)
+                if (editor.depthPanel.IsInScope(transition.target))
+                    CreateTransition(transition, editor.depthPanel.ActiveTree.enterNode, transition.target);
 
-            foreach (var nodeInScope in w.depthPanel.ActiveTree.nodes) {
+            foreach (var nodeInScope in editor.depthPanel.ActiveTree.nodes) {
 
                 foreach (var transition in nodeInScope.transitions) {
-                    var targetInScope = w.depthPanel.IsInScope(transition.target);
+                    var targetInScope = editor.depthPanel.IsInScope(transition.target);
                     if (targetInScope)
                         CreateTransition(transition);
-                    if (transition.target == w.depthPanel.ActiveTree) {
-                        CreateTransition(transition, transition.source, w.depthPanel.ActiveTree.exitNode);
+                    if (transition.target == editor.depthPanel.ActiveTree) {
+                        CreateTransition(transition, transition.source, editor.depthPanel.ActiveTree.exitNode);
                     }
                 }
             }
 
-            DrawSelection(); 
+            DrawSelection();
         }
 
         public void Clear() {
@@ -78,8 +74,8 @@ namespace StateMachineFramework.Editor {
         void OnKeyDown(KeyDownEvent evt) {
             if (evt.keyCode == KeyCode.Delete) {
                 foreach (var a in selection.GetItems())
-                    w.serialization.RemoveTransition(a);
-                w.serialization.Apply();
+                    editor.serialization.RemoveTransition(a);
+                editor.serialization.Apply();
                 Redraw();
             }
         }
@@ -116,9 +112,9 @@ namespace StateMachineFramework.Editor {
             ves.Add(t, l);
 
             container.Add(l);
-            l.Init(w.nodeView.nodes[source],
-                   w.nodeView.nodes[target],
-                   w.nodeView.nodeContainer);
+            l.Init(editor.nodeView.nodes[source],
+                   editor.nodeView.nodes[target],
+                   editor.nodeView.nodeContainer);
 
 
             l.OnSelected += TransitionClicked;
@@ -155,9 +151,9 @@ namespace StateMachineFramework.Editor {
             }
 
             DrawSelection();
-            w.transitionInspector.Display(selection.GetItems());
+            editor.transitionInspector.Display(selection.GetItems());
 
-            w.nodeView.ClearSelection();
+            editor.nodeView.ClearSelection();
         }
         void DrawSelection() {
             foreach (var a in selection.GetItems())
@@ -165,8 +161,8 @@ namespace StateMachineFramework.Editor {
         }
 
         void RemoveTransition(Transition t) {
-            w.serialization.RemoveTransition(t);
-            w.serialization.Apply();
+            editor.serialization.RemoveTransition(t);
+            editor.serialization.Apply();
             Redraw();
         }
 

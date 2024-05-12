@@ -12,12 +12,12 @@ namespace StateMachineFramework.Editor {
         public event Action OnSelectionCleared;
         public event Action<Node> OnNodeSelected;
 
-        SMWindow w;
+        StateMachineEditor w;
 
         public SerializedSelection<Transition> transitions;
 
 
-        public EditorSelection(SMWindow w) {
+        public EditorSelection(StateMachineEditor w) {
             viewPort = w.rootVisualElement.Q<ViewPortVE>();
             viewPort.RegisterCallback<MouseDownEvent>(OnClicked);
             this.w = w;

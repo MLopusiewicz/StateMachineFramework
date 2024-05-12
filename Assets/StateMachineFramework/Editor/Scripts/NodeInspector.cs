@@ -5,25 +5,29 @@ using System.Collections.Generic;
 using System.Linq;
 using UnityEditor;
 using UnityEditor.UIElements;
+using UnityEngine;
+using UnityEngine.Experimental.AI;
 using UnityEngine.UIElements;
 
 namespace StateMachineFramework.Editor {
     public class NodeInspector {
 
         TextField nameField;
-        Node selectedNode;
-        SMWindow w;
+        StateMachineEditor editor;
         SearchPopupVE searchPopup;
         VisualElement container;
         ListView behaviourList;
         SerializedProperty serializedBehaviours;
         Button addButton;
         Dictionary<string, Type> typeLut;
-        public NodeInspector(SMWindow w) {
-            container = w.rootVisualElement.Q(name: "NodeInspector");
+
+
+        Node selectedNode;
+        public NodeInspector(StateMachineEditor editor) {
+            container = editor.rootVisualElement.Q(name: "NodeInspector");
             container.SetDisplay(false);
             nameField = container.Q<TextField>();
-            this.w = w;
+            this.editor = editor;
 
             searchPopup = container.Q<SearchPopupVE>();
             searchPopup.OnEntrySelected += AddBehaviourOfType;
@@ -41,8 +45,12 @@ namespace StateMachineFramework.Editor {
 
             behaviourList.bindItem = (ve, index) => {
                 var v = ve.Q<StateBehaviourVE>();
-                var p = serializedBehaviours.GetArrayElementAtIndex(index);
-                v.Init(p);
+                try {
+                    var p = serializedBehaviours.GetArrayElementAtIndex(index);
+                    v.Init(p);
+                } catch {
+                    Debug.Log("asdf: " + index);
+                }
             };
 
             behaviourList.itemIndexChanged += OnReordered;
@@ -62,16 +70,16 @@ namespace StateMachineFramework.Editor {
             indexes.Reverse();
             foreach (var i in indexes) {
                 serializedBehaviours.DeleteArrayElementAtIndex(i);
+                editor.serialization.Apply();
             }
 
-            w.serialization.Apply();
-            RefreshList();
+            //RefreshList();
         }
 
 
         void OnReordered(int arg1, int arg2) {
             serializedBehaviours.MoveArrayElement(arg1, arg2);
-            w.serialization.Apply();
+            editor.serialization.Apply();
             RefreshList();
         }
         void RefreshList() {
@@ -96,11 +104,19 @@ namespace StateMachineFramework.Editor {
                 behaviourList.itemsSource = null;
                 return;
             }
-            w.inspector.SetActive(container);
+            editor.inspector.SetActive(container);
             selectedNode = node;
-            var serNode = w.serialization.GetSerializedNode(selectedNode);
+            var serNode = editor.serialization.GetSerializedNode(selectedNode);
+            if (serNode == null)
+                return;
+
             serializedBehaviours = serNode.FindPropertyRelative("behaviours");
-            behaviourList.itemsSource = node.behaviours;
+            List<SerializedProperty> prop = new();
+            for (int i = 0; i < serializedBehaviours.arraySize; i++) {
+                prop.Add(serializedBehaviours.GetArrayElementAtIndex(i));
+            }
+
+            behaviourList.itemsSource = prop;
             container.SetDisplay(true);
             nameField.BindProperty(serNode.FindPropertyRelative("name"));
         }
@@ -126,6 +142,10 @@ namespace StateMachineFramework.Editor {
             }
 
             return listOfBs.Select(x => x.Name).ToList();
+        }
+
+        public void Redraw() {
+            Show(selectedNode);
         }
     }
 }

@@ -4,7 +4,7 @@ using UnityEngine.UIElements;
 
 
 namespace StateMachineFramework.Editor {
-    //[CustomEditor(typeof(StateMachine))]
+    [CustomEditor(typeof(StateMachine))]
     public class StateMachineInspector : UnityEditor.Editor {
         public VisualTreeAsset uxml;
         static SMWindow window;
@@ -25,8 +25,8 @@ namespace StateMachineFramework.Editor {
         }
         void MakeInstance() {
             foreach (var win in SMWindow.windowsList) {
-                if (win.stateMachine) {
-                    if (win.stateMachine.GetInstanceID() == target.GetInstanceID()) {
+                if (win.editor.stateMachine) {
+                    if (win.editor.stateMachine.GetInstanceID() == target.GetInstanceID()) {
                         window = win;
                         return;
                     }
@@ -34,7 +34,7 @@ namespace StateMachineFramework.Editor {
             }
 
             window = EditorWindow.CreateInstance<SMWindow>();
-            window.HardInit(target as StateMachine);
+            window.Init(target as StateMachine);
         }
     }
 }

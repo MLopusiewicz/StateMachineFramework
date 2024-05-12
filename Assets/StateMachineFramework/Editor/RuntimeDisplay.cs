@@ -2,39 +2,39 @@
 namespace StateMachineFramework.Editor {
 
     public class RuntimeDisplay {
-        private SMWindow w;
+        private StateMachineEditor editor;
 
-        public RuntimeDisplay(SMWindow window) {
-            this.w = window;
+        public RuntimeDisplay(StateMachineEditor editor) {
+            this.editor = editor;
 
         }
         public void Init() {
-            w.stateMachine.logic.OnNodeEnter += Highlight;
-            w.stateMachine.logic.OnNodeExit += RemoveHighlight;
-            w.depthPanel.OnDepthChanged += DepthChanged;
-            DepthChanged(w.depthPanel.ActiveTree);
+            editor.stateMachine.logic.OnNodeEnter += Highlight;
+            editor.stateMachine.logic.OnNodeExit += RemoveHighlight;
+            editor.depthPanel.OnDepthChanged += DepthChanged;
+            DepthChanged(editor.depthPanel.ActiveTree);
         }
         public void Clear() {
-            w.stateMachine.logic.OnNodeEnter -= Highlight;
-            w.stateMachine.logic.OnNodeExit -= RemoveHighlight;
-            w.depthPanel.OnDepthChanged -= DepthChanged;
+            editor.stateMachine.logic.OnNodeEnter -= Highlight;
+            editor.stateMachine.logic.OnNodeExit -= RemoveHighlight;
+            editor.depthPanel.OnDepthChanged -= DepthChanged;
 
         }
         private void DepthChanged(TreeNode tree) {
 
-            foreach (var a in w.stateMachine.logic.activeNodes) {
-                if (w.depthPanel.IsInScope(a))
-                    w.nodeView.nodes[a].AddToClassList("active");
+            foreach (var a in editor.stateMachine.logic.activeNodes) {
+                if (editor.depthPanel.IsInScope(a))
+                    editor.nodeView.nodes[a].AddToClassList("active");
             }
         }
 
         private void Highlight(Node node) {
-            if (w.depthPanel.IsInScope(node))
-                w.nodeView.nodes[node].AddToClassList("active");
+            if (editor.depthPanel.IsInScope(node))
+                editor.nodeView.nodes[node].AddToClassList("active");
         }
         private void RemoveHighlight(Node node) {
-            if (w.depthPanel.IsInScope(node))
-                w.nodeView.nodes[node].RemoveFromClassList("active");
+            if (editor.depthPanel.IsInScope(node))
+                editor.nodeView.nodes[node].RemoveFromClassList("active");
 
         }
 

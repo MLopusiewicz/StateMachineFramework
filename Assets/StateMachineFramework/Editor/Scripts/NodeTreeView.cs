@@ -1,25 +1,22 @@
 using StateMachineFramework.Runtime;
 using StateMachineFramework.View;
-using System;
 using System.Collections.Generic;
-using UnityEditor;
 using UnityEngine;
 using UnityEngine.UIElements;
-using static UnityEngine.GraphicsBuffer;
 
 namespace StateMachineFramework.Editor {
     public class NodeTreeView {
         public ViewPortVE viewPort;
         public VisualElement nodeContainer;
         public TwoWayDictionary<NodeVE, Node> nodes = new();
-        public SMWindow w;
+        public StateMachineEditor editor;
 
         DragController drag;
 
         List<NodeVE> selectedNodes = new();
 
-        public NodeTreeView(SMWindow window) {
-            viewPort = window.rootVisualElement.Q<ViewPortVE>();
+        public NodeTreeView(StateMachineEditor editor) {
+            viewPort = editor.rootVisualElement.Q<ViewPortVE>();
             nodeContainer = viewPort.Q(name: "NodeContainer");
             viewPort.AddManipulator(
                new ContextualMenuManipulator((evt) => {
@@ -27,15 +24,14 @@ namespace StateMachineFramework.Editor {
                    evt.menu.AppendAction("Add node", (x) => CreateNode(p), DropdownMenuAction.AlwaysEnabled);
                    evt.menu.AppendAction("Add Tree", (x) => CreateTree(p), DropdownMenuAction.AlwaysEnabled);
                }));
-            w = window;
+            this.editor = editor;
 
             viewPort.RegisterCallback<KeyDownEvent>(KeyPressed, TrickleDown.TrickleDown);
 
-            w.depthPanel.OnDepthChanged += this.Init;
-            Undo.undoRedoPerformed += Redraw;
+            this.editor.depthPanel.OnDepthChanged += this.Init;
             drag = new DragController(selectedNodes, viewPort);
             drag.OnPositionSet += UpdatePositions;
-            w.selection.OnSelectionCleared += ClearSelection;
+            this.editor.selection.OnSelectionCleared += ClearSelection;
         }
 
         public void Init(TreeNode tree) {
@@ -47,9 +43,9 @@ namespace StateMachineFramework.Editor {
 
             MakeNodeVE(tree.enterNode).AddToClassList(NodeVE.NODE_SPECIAL_ENTER);
             MakeNodeVE(tree.exitNode).AddToClassList(NodeVE.NODE_SPECIAL_EXIT);
-            w.stateMachine.anyState.position = tree.anyPos;
-            MakeNodeVE(w.stateMachine.anyState).AddToClassList(NodeVE.NODE_SPECIAL_ANY);
-            w.depthPanel.AddDepthLayer(tree);
+            editor.stateMachine.anyState.position = tree.anyPos;
+            MakeNodeVE(editor.stateMachine.anyState).AddToClassList(NodeVE.NODE_SPECIAL_ANY);
+            editor.depthPanel.AddDepthLayer(tree);
         }
 
         public void Clear() {
@@ -60,25 +56,25 @@ namespace StateMachineFramework.Editor {
         public void CreateNode(Vector2 position) {
             position = viewPort.contentContainer.WorldToLocal(position);
             var node = new Node() { name = "new node" };
-            var ser = w.serialization.GetSerializedNode(w.depthPanel.ActiveTree).FindPropertyRelative("nodes");
+            var ser = editor.serialization.GetSerializedNode(editor.depthPanel.ActiveTree).FindPropertyRelative("nodes");
             ser.arraySize++;
             node.position = position;
             ser.GetArrayElementAtIndex(ser.arraySize - 1).managedReferenceValue = node;
-            w.serialization.Apply();
-            w.serialization.AddNode(node);
+            editor.serialization.Apply();
+            editor.serialization.AddNode(node);
             Redraw();
 
         }
 
         void CreateTree(Vector2 p) {
             p = viewPort.contentContainer.WorldToLocal(p);
-            w.serialization.MakeTree(p);
+            editor.serialization.MakeTree(p);
             Redraw();
         }
 
         NodeVE MakeNodeVE(Node node) {
             NodeVE n = new NodeVE();
-            n.Init(node, w.serialization.GetSerializedNode(node));
+            n.Init(node, editor.serialization.GetSerializedNode(node));
             nodeContainer.Add(n);
             n.AddManipulator(
                 new ContextualMenuManipulator((evt) => {
@@ -87,11 +83,11 @@ namespace StateMachineFramework.Editor {
 
                     SpecialNode special = node as SpecialNode;
                     if (special != null && special.canBeSource) {
-                        evt.menu.AppendAction("Make transition", (x) => { w.transitionMaker.Start(nodes[n]); }, DropdownMenuAction.AlwaysEnabled);
+                        evt.menu.AppendAction("Make transition", (x) => { editor.transitionMaker.Start(nodes[n]); }, DropdownMenuAction.AlwaysEnabled);
                     }
 
                     if (special == null) {
-                        evt.menu.AppendAction("Make transition", (x) => { w.transitionMaker.Start(nodes[n]); }, DropdownMenuAction.AlwaysEnabled);
+                        evt.menu.AppendAction("Make transition", (x) => { editor.transitionMaker.Start(nodes[n]); }, DropdownMenuAction.AlwaysEnabled);
                         evt.menu.AppendAction("Remove", (x) => RemoveSelected(), DropdownMenuAction.AlwaysEnabled);
                         evt.menu.AppendAction("Rename", (x) => n.RenameState(), DropdownMenuAction.AlwaysEnabled);
                     }
@@ -116,12 +112,12 @@ namespace StateMachineFramework.Editor {
             foreach (var a in sel) {
 
                 if (nodes[a] is SpecialNode sn) {
-                    var tree = w.serialization.GetSerializedNode(w.depthPanel.ActiveTree);
+                    var tree = editor.serialization.GetSerializedNode(editor.depthPanel.ActiveTree);
                     tree.FindPropertyRelative($"{sn.name.Split(" ")[0].ToLower()}Pos").vector2Value = a.transform.position;
                 } else {
-                    w.serialization.GetSerializedNode(nodes[a]).FindPropertyRelative("position").vector2Value = a.transform.position;
+                    editor.serialization.GetSerializedNode(nodes[a]).FindPropertyRelative("position").vector2Value = a.transform.position;
                 }
-                w.serialization.Apply();
+                editor.serialization.Apply();
             }
         }
 
@@ -136,10 +132,10 @@ namespace StateMachineFramework.Editor {
             if (selectedNodes.Count == 0)
                 return;
             foreach (var ve in selectedNodes) {
-                w.serialization.RemoveNode(nodes[ve]);
+                editor.serialization.RemoveNode(nodes[ve]);
                 nodes.Remove(ve);
             }
-            w.serialization.Apply();
+            editor.serialization.Apply();
             selectedNodes.Clear();
             Redraw();
         }
@@ -162,8 +158,8 @@ namespace StateMachineFramework.Editor {
             if (x.clickCount != 1)
                 return;
 
-            if (w.transitionMaker.isPicking) {
-                w.transitionMaker.MakeTransition(n);
+            if (editor.transitionMaker.isPicking) {
+                editor.transitionMaker.MakeTransition(n);
                 return;
             }
 
@@ -198,14 +194,14 @@ namespace StateMachineFramework.Editor {
             }
 
             if (selectedNodes.Count == 1)
-                w.nodeInspector.Show(nodes[selectedNodes[0]]);
+                editor.nodeInspector.Show(nodes[selectedNodes[0]]);
             else
-                w.nodeInspector.Show(null);
+                editor.nodeInspector.Show(null);
 
             foreach (var a in selectedNodes) {
                 a.AddToClassList("selected");
             }
-            w.transitions.ClearSelection();
+            editor.transitions.ClearSelection();
         }
 
 
@@ -214,13 +210,13 @@ namespace StateMachineFramework.Editor {
             foreach (var ve in selectedNodes)
                 ve.RemoveFromClassList("selected");
             selectedNodes.Clear();
-            w.nodeInspector.Clear();
+            editor.nodeInspector.Clear();
 
         }
 
 
         void Redraw() {
-            Init(w.depthPanel.ActiveTree);
+            Init(editor.depthPanel.ActiveTree);
         }
 
     }

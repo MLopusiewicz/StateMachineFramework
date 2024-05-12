@@ -9,13 +9,13 @@ namespace StateMachineFramework.Editor {
         Node target, source;
         TransitionVE pickingLine;
         ViewPortVE viewport;
-        SMWindow w;
+        StateMachineEditor editor;
         VisualElement container;
 
-        public TransitionMaker(SMWindow w) {
-            this.w = w;
-            viewport = w.rootVisualElement.Q<ViewPortVE>();
-            container = w.rootVisualElement.Q(name: "LineContainer");
+        public TransitionMaker(StateMachineEditor editor) {
+            this.editor = editor;
+            viewport = editor.rootVisualElement.Q<ViewPortVE>();
+            container = editor.rootVisualElement.Q(name: "LineContainer");
 
             viewport.RegisterCallback<MouseDownEvent>(OnMouseDown);
             viewport.RegisterCallback<KeyDownEvent>(OnKeyDown);
@@ -36,7 +36,7 @@ namespace StateMachineFramework.Editor {
 
         void OnMouseMove(MouseMoveEvent evt) {
             var p = viewport.contentContainer.WorldToLocal(evt.mousePosition);
-            pickingLine.Init(w.nodeView.nodes[source].localBound.center, p);
+            pickingLine.Init(editor.nodeView.nodes[source].localBound.center, p);
         }
 
         public void Start(Node n) {
@@ -70,7 +70,7 @@ namespace StateMachineFramework.Editor {
                     return;
                 }
                 if (specialNode.name == "Exit") {
-                    target = w.depthPanel.ActiveTree;
+                    target = editor.depthPanel.ActiveTree;
                 }
             }
 
@@ -80,16 +80,16 @@ namespace StateMachineFramework.Editor {
                     return;
                 }
                 if (special.name == "Enter") {
-                    ss = w.depthPanel.ActiveTree;
+                    ss = editor.depthPanel.ActiveTree;
                 }
             }
 
             Transition trans = new Transition() { source = ss, target = target };
 
-            w.serialization.AddTransition(trans);
-            w.serialization.Apply();
+            editor.serialization.AddTransition(trans);
+            editor.serialization.Apply();
             DisablePickingState();
-            w.transitions.Redraw();
+            editor.transitions.Redraw();
         }
     }
 }

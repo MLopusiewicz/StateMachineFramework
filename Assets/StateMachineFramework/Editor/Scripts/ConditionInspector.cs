@@ -16,8 +16,8 @@ namespace StateMachineFramework.Editor {
         VisualElement emptyTransitionError;
 
         Transition displayedTransition;
-        SMWindow w;
-        public ConditionInspector(VisualElement root, SMWindow w) {
+        StateMachineEditor editor;
+        public ConditionInspector(VisualElement root, StateMachineEditor editor) {
             container = root;
             searchPopup = container.Q<SearchPopupVE>();
             emptyTransitionError = container.Q(name: "AnyStateError");
@@ -26,18 +26,18 @@ namespace StateMachineFramework.Editor {
             searchPopup.Hide();
             SetupConditionsList();
 
-            this.w = w;
+            this.editor = editor;
         }
 
         public void ShowConditions(Transition transition) {
             displayedTransition = transition;
 
-            conditionsList.itemsSource = w.serialization.TranstionConditions(displayedTransition);
+            conditionsList.itemsSource = editor.serialization.TranstionConditions(displayedTransition);
             conditionsList.RefreshItems();
-            searchPopup.Init(w.stateMachine.Parameters.Select(x => x.Key).ToList());
+            searchPopup.Init(editor.stateMachine.Parameters.Select(x => x.Key).ToList());
 
 
-            if (transition.source == w.stateMachine.anyState && transition.conditions.Count == 0)
+            if (transition.source == editor.stateMachine.anyState && transition.conditions.Count == 0)
                 emptyTransitionError.SetDisplay(true);
             else
                 emptyTransitionError.SetDisplay(false);
@@ -52,7 +52,7 @@ namespace StateMachineFramework.Editor {
             };
             conditionsList.bindItem = (ve, i) => {
                 var c = ve.Q<ConditionVE>();
-                var p = w.serialization.ConditionsList(displayedTransition).GetArrayElementAtIndex(i);
+                var p = editor.serialization.ConditionsList(displayedTransition).GetArrayElementAtIndex(i);
                 c.Init(p, () => ChangeRequested(ve, i));
             };
 
@@ -64,10 +64,10 @@ namespace StateMachineFramework.Editor {
 
         void Add(IEnumerable<int> a) {
 
-            var g = w.serialization.ConditionsList(displayedTransition);
+            var g = editor.serialization.ConditionsList(displayedTransition);
             g.arraySize++;
-            UpdateParameter(w.stateMachine.Parameters[0].Key, g.arraySize - 1);
-            w.serialization.Apply();
+            UpdateParameter(editor.stateMachine.Parameters[0].Key, g.arraySize - 1);
+            editor.serialization.Apply();
         }
 
         void ChangeRequested(VisualElement ve, int index) {
@@ -89,8 +89,8 @@ namespace StateMachineFramework.Editor {
         }
 
         void OnReordered(int arg1, int arg2) {
-            w.serialization.ConditionsList(displayedTransition).MoveArrayElement(arg1, arg2);
-            w.serialization.Apply();
+            editor.serialization.ConditionsList(displayedTransition).MoveArrayElement(arg1, arg2);
+            editor.serialization.Apply();
         }
 
         void OnItemRemoved(IEnumerable<int> enumerable) {
@@ -98,16 +98,16 @@ namespace StateMachineFramework.Editor {
             List<int> removalList = new List<int>(enumerable);
             removalList.Reverse();
             foreach (int i in removalList) {
-                w.serialization.ConditionsList(displayedTransition).DeleteArrayElementAtIndex(i);
+                editor.serialization.ConditionsList(displayedTransition).DeleteArrayElementAtIndex(i);
             }
-            w.serialization.Apply();
+            editor.serialization.Apply();
         }
 
 
         void UpdateParameter(string parmater, int conditionIndex) {
-            var param = w.serialization.GetParameter(parmater);
+            var param = editor.serialization.GetParameter(parmater);
 
-            var ss = w.serialization.GetTransition(displayedTransition).FindPropertyRelative("conditions");
+            var ss = editor.serialization.GetTransition(displayedTransition).FindPropertyRelative("conditions");
             var transitionCondition = ss.GetArrayElementAtIndex(conditionIndex);
 
             Equation g;

@@ -10,16 +10,16 @@ namespace StateMachineFramework.Editor {
 
         public ConditionInspector conditions;
 
-        SMWindow w;
+        StateMachineEditor editor;
         VisualElement container;
 
         ListView transitionsList;
         List<Transition> displayedTransitions;
 
-        public TransitionInspector(SMWindow w) {
-            this.w = w;
-            container = w.rootVisualElement.Q(name: "TransitionInspector");
-            conditions = new ConditionInspector(container, w);
+        public TransitionInspector(StateMachineEditor editor) {
+            this.editor = editor;
+            container = editor.rootVisualElement.Q(name: "TransitionInspector");
+            conditions = new ConditionInspector(container, editor);
             container.SetDisplay(false);
             SetupTransitionsList();
         }
@@ -32,7 +32,7 @@ namespace StateMachineFramework.Editor {
                 return;
             }
             if (transitions.Count > 0) {
-                w.inspector.SetActive(container);
+                editor.inspector.SetActive(container);
                 conditions.ShowConditions(transitions[0]);
                 transitionsList.itemsSource = transitions;
                 transitionsList.Rebuild();
@@ -59,7 +59,7 @@ namespace StateMachineFramework.Editor {
                 sourceText = t.source.name;
                 c.text = $"{sourceText} -> {t.target.name}";
 
-                if (t.source == w.stateMachine.anyState && t.conditions.Count == 0)
+                if (t.source == editor.stateMachine.anyState && t.conditions.Count == 0)
                     c.AddToClassList("error-label");
             };
             transitionsList.itemsRemoved += TransitionRemoved;
@@ -72,12 +72,12 @@ namespace StateMachineFramework.Editor {
             List<int> removal = new List<int>(enumerable);
             removal.Reverse();
             foreach (var a in removal) {
-                w.serialization.RemoveTransition(displayedTransitions[a]);
-                w.serialization.Apply();
+                editor.serialization.RemoveTransition(displayedTransitions[a]);
+                editor.serialization.Apply();
             }
 
 
-            w.transitions.Redraw();
+            editor.transitions.Redraw();
             //Redraw();
         }
 
@@ -90,7 +90,7 @@ namespace StateMachineFramework.Editor {
 
         public void Redraw() {
 
-            Display(w.selection.transitions.GetItems());
+            Display(editor.selection.transitions.GetItems());
 
         }
     }
