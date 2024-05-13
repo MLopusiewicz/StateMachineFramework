@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 namespace StateMachineFramework.Runtime {
 
-    public class StateMachine : MonoBehaviour {
+    public class StateMachineFramework : MonoBehaviour {
 
         public ParameterController parameters;
         public StateMachineLogic logic;
@@ -46,7 +46,14 @@ namespace StateMachineFramework.Runtime {
         private void Start() {
             logic.Start();
         }
+        private void OnDestroy() {
+            foreach (var node in logic.nodes) {
+                foreach (var behaviour in node.behaviours) {
+                    behaviour.OnDestroy();
+                }
 
+            }
+        }
     }
 
     public static class SMHelper {

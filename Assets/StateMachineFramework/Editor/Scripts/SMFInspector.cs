@@ -4,17 +4,17 @@ using UnityEngine.UIElements;
 
 
 namespace StateMachineFramework.Editor {
-    [CustomEditor(typeof(StateMachine))]
-    public class StateMachineInspector : UnityEditor.Editor {
+    [CustomEditor(typeof(Runtime.StateMachineFramework))]
+    public class SMFInspector : UnityEditor.Editor {
         public VisualTreeAsset uxml;
-        static SMWindow window;
+        static TargetSMWindow window; 
         public override VisualElement CreateInspectorGUI() {
             base.CreateInspectorGUI();
             var ve = uxml.Instantiate();
-            ve.Q<Button>().clicked += OpenWindow;
+            ve.Q<Button>().clicked += OpenWindow; 
             return ve;
         }
-
+       
         private void OpenWindow() {
             if (window == null) {
                 MakeInstance();
@@ -23,8 +23,9 @@ namespace StateMachineFramework.Editor {
             window.Show();
             window.Focus();
         }
+
         void MakeInstance() {
-            foreach (var win in SMWindow.windowsList) {
+            foreach (var win in TargetSMWindow.windowsList) {
                 if (win.editor.stateMachine) {
                     if (win.editor.stateMachine.GetInstanceID() == target.GetInstanceID()) {
                         window = win;
@@ -33,8 +34,8 @@ namespace StateMachineFramework.Editor {
                 }
             }
 
-            window = EditorWindow.CreateInstance<SMWindow>();
-            window.Init(target as StateMachine);
+            window = EditorWindow.CreateInstance<TargetSMWindow>();
+            window.Init(target as Runtime.StateMachineFramework);
         }
     }
 }

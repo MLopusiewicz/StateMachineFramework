@@ -3,7 +3,7 @@ using StateMachineFramework.Runtime;
 using UnityEngine.UIElements;
 
 public class StateMachineEditor {
-    public StateMachine stateMachine;
+    public StateMachineFramework.Runtime.StateMachineFramework stateMachine;
 
     public SerializationHelper serialization;
     public ParameterInspector parameterTab;
@@ -39,7 +39,7 @@ public class StateMachineEditor {
         runtime = new RuntimeDisplay(this);
     }
 
-    public void SetDisplay(StateMachine sm) {
+    public void SetDisplay(StateMachineFramework.Runtime.StateMachineFramework sm) {
         stateMachine = sm;
 
         if (stateMachine == null) {

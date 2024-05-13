@@ -1,4 +1,4 @@
-![Logo](images/LogoMain.png)
+![Logo](images/LogoWithText.png)
 ## Goal
 Framework was developed to speed up creation of state machines. The solution is designed   to work with code-based state machines by adding visual layer for transitions and states.  
 With State behaviours and tree structure it allows for complex state-machines.
@@ -28,7 +28,7 @@ StateBehaviour implements Awake, Update, Exit, Enter:
 ### Transitions
 As transitions have no "transition time" whenever the parameter is changed transitions from current nodes, as well as AnyNode transitions, are evaluated. In case transition evaluates as true, the current state is exited and new state enters on same frame. 
 #### Endless loops
-Be careful of endless loops. It's possible to create a circular path of transitions, which will lead to multiple entering/exiting nodes in the loop in one frame. To prevent this, it's only possible to go through 20 transitions per frame ( #treshold).
+Be careful of endless loops. It's possible to create a circular path of transitions, which will lead to multiple entering/exiting nodes in the loop in one frame. To prevent this, it's only possible to go through 20 transitions per frame.
 
 #### Tree
 Enter - Substate transitions are only evaluated whenever the TreeNode is Entered.  Meaning, if the active state is Node_1 and transition from Enter-Node_2 evaluates to true, it doesn't move to Node_2.
@@ -37,7 +37,7 @@ Enter - Substate transitions are only evaluated whenever the TreeNode is Entered
 ![[TreeEntryTransition.png]]
 Transitioning to exit will re-enter the parent tree,   evaluating the enter transitions as well as exiting&entering parent behaviours.
 #### Priority 
-As there are possible active substates and trees at the same time. The priority runs from the most nested to root. Meaning: If the nested state has transition evaluated as true, and it's parent as well, the child takes priority and that's the transition that takes place.
+As there are possible active substates and trees at the same time. The priority runs from the root to the nested nodes. Meaning: If both parent and child have valid transitions, parent transition will take precedence.
 
 ## FAQ:
 - Why not make transition condition limited to hardcoded float/int/bool/trigger parameters? 
@@ -45,4 +45,7 @@ As there are possible active substates and trees at the same time. The priority 
 
 
 ## Report a bug
-to report a bug
+to report a bug  create new issue:
+https://github.com/MLopusiewicz/StateMachineFramework/issues
+
+

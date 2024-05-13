@@ -1,5 +1,4 @@
 using System;
-using UnityEngine;
 
 namespace StateMachineFramework.Runtime {
 
@@ -10,21 +9,6 @@ namespace StateMachineFramework.Runtime {
         public virtual void Update() { }
         public abstract void Enter();
         public abstract void Exit();
-
-    }
-
-    [Serializable]
-    public class SomeState : StateBehaviour {
-
-        [SerializeField]
-        public GameObject referenceToSomething;
-        public int amoutn;
-
-        public override void Enter() {
-            Debug.Log($"Entered State");
-        }
-        public override void Exit() {
-            Debug.Log($"Exited State");
-        }
+        public virtual void OnDestroy() { }
     }
 }

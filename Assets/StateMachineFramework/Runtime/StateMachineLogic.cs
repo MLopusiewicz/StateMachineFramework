@@ -13,6 +13,7 @@ namespace StateMachineFramework.Runtime {
         int transitionCount = 0;
         int transitionsPerFrameTreshhold = 30;
         Transition overflownTransition;
+
         public StateMachineLogic(List<Node> nodes, List<IParameter> parameters) {
             this.nodes = nodes;
             foreach (var a in nodes) {
@@ -36,9 +37,11 @@ namespace StateMachineFramework.Runtime {
                 }
             }
             foreach (var node in activeNodes) {
+
                 foreach (var transition in node.transitions) {
                     if (transition.target.parent == transition.source)
                         continue;
+
                     if (transition.Evaluate()) {
                         Move(transition);
                         return;
@@ -92,17 +95,16 @@ namespace StateMachineFramework.Runtime {
         }
 
         private void NodeExited(Node node) {
-            Debug.Log($"[SM] Exited: {node.name}");
             activeNodes.Remove(node);
             OnNodeExit?.Invoke(node);
         }
 
         private void NodeEntered(Node node) {
-            Debug.Log($"[SM] Entered: {node.name}");
             activeNodes.Add(node);
             var t = GetFirstValid(node);
             if (t != null)
                 Move(t);
+
             else if (node is TreeNode tree) {
 
             }
@@ -120,7 +122,6 @@ namespace StateMachineFramework.Runtime {
         internal void Start() {
             nodes[0].Enter();
         }
-
 
         public void EnterState(string state) {
             transitionCount = 0;

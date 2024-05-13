@@ -1,5 +1,3 @@
-using StateMachineFramework.Runtime;
-using System.Collections.Generic;
 using UnityEditor;
 using UnityEngine;
 using UnityEngine.UIElements;
@@ -7,34 +5,28 @@ using UnityEngine.UIElements;
 namespace StateMachineFramework.Editor {
 
     [ExecuteAlways]
-    public class SMWindow : EditorWindow {
+    public abstract class SMWindow : EditorWindow {
         [SerializeField] private int m_SelectedIndex = -1;
         public VisualTreeAsset asset;
         public Texture icon;
 
-        public static List<SMWindow> windowsList = new List<SMWindow>();
 
 
         public StateMachineEditor editor;
 
-        public void Init(StateMachine sm) {
-            this.titleContent = new GUIContent(sm.gameObject.name, this.icon);
-            editor.stateMachine = sm;
+
+        private void OnFocus() {
+            editor.unredo.Redraw();
         }
 
         public virtual void CreateGUI() {
-            Debug.Log("GUI done");
-            windowsList.Add(this);
             Focus();
             var editorTree = asset.Instantiate();
             EditorApplication.playModeStateChanged += OnPlayChanged;
             rootVisualElement.Add(editorTree);
-
             editorTree.style.width = new Length(100, LengthUnit.Percent);
             editorTree.style.height = new Length(100, LengthUnit.Percent);
-
             editor = new StateMachineEditor(rootVisualElement);
-
         }
 
         private void OnPlayChanged(PlayModeStateChange change) {
@@ -58,10 +50,6 @@ namespace StateMachineFramework.Editor {
             }
         }
 
-        protected virtual void OnDestroy() {
-            Debug.Log("Destroyed");
-            windowsList.Remove(this);
-        }
+
     }
 }
-

@@ -1,6 +1,6 @@
 {
   "name": "com.lonetower.statemachineframework",
-  "version": "0.0.1",
+  "version": "0.0.1-alpha",
   "displayName": "State Machine Framework",
   "description": "Light and simple State Machine Framework with substates",
   "unity": "2022.3",

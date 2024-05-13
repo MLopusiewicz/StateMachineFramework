@@ -228,7 +228,7 @@ GameObject:
   - component: {fileID: 784380250}
   - component: {fileID: 784380249}
   m_Layer: 0
-  m_Name: StateMachine
+  m_Name: MyObject
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -251,8 +251,6 @@ MonoBehaviour:
   - rid: 7027765085610967125
   - rid: 7027765085610967126
   - rid: 7027765085610967127
-  - rid: 7027765085610967173
-  - rid: 7027765252790943756
   _parameters:
   - rid: 7027765166010007609
   - rid: 6660633874549702779
@@ -294,10 +292,8 @@ MonoBehaviour:
         nodes:
         - rid: 7027765085610967126
         - rid: 7027765085610967127
-        - rid: 7027765085610967173
-        - rid: 7027765252790943756
-        enterPos: {x: 16.83081, y: 127.93585}
-        exitPos: {x: 150.63306, y: 61.84471}
+        enterPos: {x: -423.83588, y: 352.60257}
+        exitPos: {x: 223.29974, y: 219.84471}
         anyPos: {x: -215.02979, y: 191.56221}
     - rid: 7027765085610967125
       type: {class: SpecialNode, ns: StateMachineFramework.Runtime, asm: LoneTower.StateMachineFramework}
@@ -312,17 +308,20 @@ MonoBehaviour:
     - rid: 7027765085610967126
       type: {class: Node, ns: StateMachineFramework.Runtime, asm: LoneTower.StateMachineFramework}
       data:
-        name: new node
-        position: {x: -127.17682, y: 470.90857}
-        behaviours: []
+        name: Running
+        position: {x: 80.82309, y: 410.90857}
+        behaviours:
+        - rid: 7027765270285123584
+        - rid: 7027765270285123585
         _transitions: []
     - rid: 7027765085610967127
       type: {class: TreeNode, ns: StateMachineFramework.Runtime, asm: LoneTower.StateMachineFramework}
       data:
         name: Tree
-        position: {x: -220.31403, y: 336.95593}
+        position: {x: -188.31403, y: 408.28925}
         behaviours:
         - rid: 7027765085610967133
+        - rid: 7027765270285123586
         _transitions:
         - rid: 6660633874549702849
         nodes: []
@@ -354,65 +353,26 @@ MonoBehaviour:
     - rid: 7027765085610967171
       type: {class: TriggerEquation, ns: StateMachineFramework.Runtime, asm: LoneTower.StateMachineFramework}
       data: 
-    - rid: 7027765085610967173
-      type: {class: TreeNode, ns: StateMachineFramework.Runtime, asm: LoneTower.StateMachineFramework}
-      data:
-        name: ASD
-        position: {x: 238.70197, y: 307.04086}
-        behaviours:
-        - rid: 7027765085610967174
-        - rid: 7027765252790943763
-        - rid: 7027765252790943764
-        _transitions: []
-        nodes: []
-        enterPos: {x: 0, y: 200}
-        exitPos: {x: 500, y: 200}
-        anyPos: {x: 0, y: 0}
-    - rid: 7027765085610967174
-      type: {class: DebugState, ns: StateMachineFramework.Runtime, asm: LoneTower.StateMachineFramework}
-      data:
-        referenceToSomething: {fileID: 0}
-        cos: 0
     - rid: 7027765166010007609
       type: {class: IntParameter, ns: StateMachineFramework.Runtime, asm: LoneTower.StateMachineFramework}
       data:
         key: New int
         value: 46
-    - rid: 7027765252790943756
-      type: {class: Node, ns: StateMachineFramework.Runtime, asm: LoneTower.StateMachineFramework}
-      data:
-        name: new node
-        position: {x: 176.00003, y: 439.3334}
-        behaviours: []
-        _transitions:
-        - rid: 7027765252790943760
-    - rid: 7027765252790943760
-      type: {class: Transition, ns: StateMachineFramework.Runtime, asm: LoneTower.StateMachineFramework}
-      data:
-        source:
-          rid: 7027765252790943756
-        target:
-          rid: 7027765085610967126
-        conditions:
-        - parameter:
-            rid: 7027765166010007609
-          equation:
-            rid: 7027765252790943766
-    - rid: 7027765252790943763
-      type: {class: DebugState, ns: StateMachineFramework.Runtime, asm: LoneTower.StateMachineFramework}
-      data:
-        referenceToSomething: {fileID: 0}
-        cos: 0
-    - rid: 7027765252790943764
+    - rid: 7027765270285123584
       type: {class: SomeState, ns: StateMachineFramework.Runtime, asm: LoneTower.StateMachineFramework}
       data:
         referenceToSomething: {fileID: 0}
         amoutn: 0
-    - rid: 7027765252790943766
-      type: {class: IntEquation, ns: StateMachineFramework.Runtime, asm: LoneTower.StateMachineFramework}
+    - rid: 7027765270285123585
+      type: {class: SomeState, ns: StateMachineFramework.Runtime, asm: LoneTower.StateMachineFramework}
       data:
-        type: 0
-        value: 0
+        referenceToSomething: {fileID: 0}
+        amoutn: 0
+    - rid: 7027765270285123586
+      type: {class: DebugState, ns: StateMachineFramework.Runtime, asm: LoneTower.StateMachineFramework}
+      data:
+        referenceToSomething: {fileID: 0}
+        cos: 0
 --- !u!4 &784380250
 Transform:
   m_ObjectHideFlags: 0
@@ -565,7 +525,7 @@ MonoBehaviour:
         _transitions: []
         nodes: []
         enterPos: {x: 0, y: 200}
-        exitPos: {x: 500, y: 200}
+        exitPos: {x: 254.66669, y: 320.66666}
         anyPos: {x: 0, y: 0}
     - rid: 7027765252790943779
       type: {class: SpecialNode, ns: StateMachineFramework.Runtime, asm: LoneTower.StateMachineFramework}

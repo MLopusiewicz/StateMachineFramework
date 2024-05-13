@@ -6,7 +6,7 @@ namespace StateMachineFramework.Editor {
     public class MainSMWindow : SMWindow {
 
         [MenuItem("Window/State Machine Framework")]
-        public static void ShowMyEditor() {
+        public static void GetWindow() {
             MainSMWindow wnd = GetWindow<MainSMWindow>();
             wnd.minSize = new Vector2(450, 200);
             wnd.titleContent = new GUIContent("State Machine", wnd.icon);
@@ -15,14 +15,12 @@ namespace StateMachineFramework.Editor {
         public override void CreateGUI() {
             base.CreateGUI();
             UnityEditor.Selection.selectionChanged += SelectionUpdated;
-
         }
         void SelectionUpdated() {
-            editor.SetDisplay(UnityEditor.Selection.activeGameObject?.GetComponent<StateMachine>());
+            editor.SetDisplay(UnityEditor.Selection.activeGameObject?.GetComponent<Runtime.StateMachineFramework>());
         }
 
-        protected override void OnDestroy() {
-            base.OnDestroy();
+        protected void OnDestroy() {
             UnityEditor.Selection.selectionChanged -= SelectionUpdated;
 
         }
