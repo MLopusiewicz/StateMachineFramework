@@ -10,14 +10,14 @@ using TreeNode = StateMachineFramework.Runtime.TreeNode;
 namespace StateMachineFramework.Editor {
     public class SerializationHelper {
         SerializedObject serializedObj;
-        Runtime.StateMachineFramework sm;
+        Runtime.StateMachine sm;
 
         public Action<Node> OnNodeAdded, OnNodeRemoved;
 
 
         public SerializationHelper() {
         }
-        public void Init(Runtime.StateMachineFramework sm) {
+        public void Init(Runtime.StateMachine sm) {
             this.sm = sm;
             serializedObj = new SerializedObject(sm);
         }

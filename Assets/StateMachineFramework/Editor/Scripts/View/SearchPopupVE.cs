@@ -1,3 +1,4 @@
+using Codice.Client.Common;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -56,13 +57,14 @@ namespace StateMachineFramework.View {
         public void Show() {
             this.visible = true;
             searchBar.Focus();
+            searchBar.schedule.Execute(searchBar.Focus).ExecuteLater(10);
         }
         public void Hide() {
             this.visible = false;
         }
 
         void Redraw() {
-            behaviourList.itemsSource = allItems.Where(x => x.Contains(searchKey)).ToList();
+            behaviourList.itemsSource = allItems.Where(x => x.ToLower().Contains(searchKey)).ToList();
             behaviourList.Rebuild();
         }
 
@@ -73,12 +75,14 @@ namespace StateMachineFramework.View {
 
 
         private void SearchChanged(ChangeEvent<string> evt) {
-            searchKey = evt.newValue;
+            searchKey = evt.newValue.ToLower();
             Redraw();
         }
 
         private void FocusLost(FocusOutEvent evt) {
-            Hide();
+            if (!this.Contains(evt.relatedTarget as VisualElement))
+                Hide();
+
         }
 
         private void OnSelected(IEnumerable<object> enumerable) {

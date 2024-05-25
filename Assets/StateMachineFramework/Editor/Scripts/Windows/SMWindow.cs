@@ -1,3 +1,4 @@
+using Codice.CM.Common.Replication;
 using UnityEditor;
 using UnityEngine;
 using UnityEngine.UIElements;
@@ -16,7 +17,11 @@ namespace StateMachineFramework.Editor {
 
 
         private void OnFocus() {
-            editor.unredo.Redraw();
+            if (editor != null) {
+                if (editor.stateMachine != null)
+                    editor.unredo.Redraw();
+
+            }
         }
 
         public virtual void CreateGUI() {
@@ -27,17 +32,11 @@ namespace StateMachineFramework.Editor {
             editorTree.style.width = new Length(100, LengthUnit.Percent);
             editorTree.style.height = new Length(100, LengthUnit.Percent);
             editor = new StateMachineEditor(rootVisualElement);
+            SetPlayMode(Application.isPlaying);
         }
 
         private void OnPlayChanged(PlayModeStateChange change) {
-            if (change == PlayModeStateChange.ExitingEditMode) {
-                editor.isRuntime = true;
-                editor.runtime.Init();
-            } else {
-
-                editor.runtime.Clear();
-                editor.isRuntime = false;
-            }
+            SetPlayMode(change == PlayModeStateChange.ExitingEditMode);
         }
 
 
@@ -50,6 +49,14 @@ namespace StateMachineFramework.Editor {
             }
         }
 
-
+        public void SetPlayMode(bool state) {
+            if (state) {
+                editor.isRuntime = true;
+                editor.runtime.Init();
+            } else {
+                editor.runtime.Clear();
+                editor.isRuntime = false;
+            }
+        }
     }
 }

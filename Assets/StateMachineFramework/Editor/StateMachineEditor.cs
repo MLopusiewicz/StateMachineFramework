@@ -1,9 +1,11 @@
-﻿using StateMachineFramework.Editor;
+﻿using Sirenix.Utilities.Editor;
+using StateMachineFramework.Editor;
 using StateMachineFramework.Runtime;
+using UnityEngine;
 using UnityEngine.UIElements;
 
 public class StateMachineEditor {
-    public StateMachineFramework.Runtime.StateMachineFramework stateMachine;
+    public StateMachine stateMachine;
 
     public SerializationHelper serialization;
     public ParameterInspector parameterTab;
@@ -18,9 +20,11 @@ public class StateMachineEditor {
     public EditorSelection selection;
     public InspectorWindow inspector;
     public RuntimeDisplay runtime;
+    public LockController lockController;
 
     public VisualElement rootVisualElement;
     public bool isRuntime = false;
+
 
     public StateMachineEditor(VisualElement rootVisualElement) {
         this.rootVisualElement = rootVisualElement;
@@ -35,11 +39,14 @@ public class StateMachineEditor {
         transitions = new TransitionView(this);
         transitionInspector = new TransitionInspector(this);
         unredo = new Unredo(this);
-
         runtime = new RuntimeDisplay(this);
+        lockController = new LockController(this);
     }
 
-    public void SetDisplay(StateMachineFramework.Runtime.StateMachineFramework sm) {
+    public void SetDisplay(StateMachine sm) {
+        if (lockController.IsLocked)
+            return;
+
         stateMachine = sm;
 
         if (stateMachine == null) {
@@ -56,7 +63,8 @@ public class StateMachineEditor {
         parameterTab.Init();
         nodeView.Init(stateMachine.Root);
         transitions.Redraw();
-
+        if (Application.isPlaying)
+            runtime.Init();
     }
     public void Dispose() {
         unredo.Dispose();

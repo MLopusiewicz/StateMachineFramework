@@ -60,7 +60,7 @@
     font-size: 18px;
 }
 
-.unity-toggle__input {
+#ParameterTab .unity-toggle__input {
     align-items: center;
     justify-content: center;
     margin-top: 0;

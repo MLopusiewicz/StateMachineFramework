@@ -4,22 +4,33 @@
     "type": "split",
     "children": [
       {
-        "id": "73092fd58a49c045",
+        "id": "3c741d2285b02098",
         "type": "tabs",
         "children": [
           {
-            "id": "04a029bbb38d8fc2",
+            "id": "ac4ecd8975a7cc14",
+            "type": "leaf",
+            "state": {
+              "type": "image",
+              "state": {
+                "file": "Images/WindowLocation.png"
+              }
+            }
+          },
+          {
+            "id": "834bfbdfce17e033",
             "type": "leaf",
             "state": {
               "type": "markdown",
               "state": {
-                "file": "README.md",
+                "file": "Assets/StateMachineFramework/CHANGELOG.md",
                 "mode": "source",
                 "source": false
               }
             }
           }
-        ]
+        ],
+        "currentTab": 1
       }
     ],
     "direction": "vertical"
@@ -85,7 +96,7 @@
             "state": {
               "type": "backlink",
               "state": {
-                "file": "README.md",
+                "file": "Assets/StateMachineFramework/CHANGELOG.md",
                 "collapseAll": false,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
@@ -102,7 +113,7 @@
             "state": {
               "type": "outgoing-link",
               "state": {
-                "file": "README.md",
+                "file": "Assets/StateMachineFramework/CHANGELOG.md",
                 "linksCollapsed": false,
                 "unlinkedCollapsed": true
               }
@@ -125,7 +136,7 @@
             "state": {
               "type": "outline",
               "state": {
-                "file": "README.md"
+                "file": "Assets/StateMachineFramework/CHANGELOG.md"
               }
             }
           }
@@ -146,27 +157,34 @@
       "command-palette:Open command palette": false
     }
   },
-  "active": "04a029bbb38d8fc2",
+  "active": "834bfbdfce17e033",
   "lastOpenFiles": [
-    "Temp/ADB-Refresh9a94e86894bd1f64594ea10d239b8e58",
-    "Library/Bee/TundraBuildState.state",
-    "Library/Search/propertyDatabase.db_34be1fa25e024f3ea60b57292afd2e42_temp",
-    "Library/Artifacts/95/9561f1c169ae4ed53748aa02d7bd3b80",
-    "Library/Search/propertyDatabase.db_166c079ad2ea48de915477bbd670b016_temp",
-    "Library/Artifacts/cc/cc70195dcc1967be81fecc17fa5a988e",
-    "Library/Artifacts/2e/2e064bc71c512b7438f92f6fd72997f1",
-    "Pasted image 20240505201410.png",
-    "README.md",
+    "Temp/UnityTempFile-6a530df8bc5b6874ab0bb3d7161ff100",
+    "Temp/UnityTempFile-d9742df5ac135504bb57eabc5874bed8",
     "State Machine Framework.md",
+    "Library/Search/propertyAliases.db_4422e41d35744615a9351098479c6c88_temp",
+    "Temp/ADB-Refreshc6a2847c9f245364aa168640e71c5b82",
+    "Assets/StateMachineFramework/Runtime/uismm3g5.02g~",
+    "Assets/StateMachineFramework/Runtime/SomeState.cs",
     "Images/LogoWithText.png",
-    "Library/Search/propertyDatabase.db_49b9e471d5654f4ab5c0f1eb6dbfbf74_temp",
-    "Library/Search/propertyDatabase.db_3aebf63a2b2b49818da64903804b6c17_temp",
-    "Library/Search/propertyDatabase.db_6a3e40839b694d14847990ba2938e862_temp",
-    "Library/Search/propertyDatabase.db_670894d249b7429280a5799948ff72df_temp",
-    "Images/LogoMain.png",
+    "Images/LogoWithText.png",
+    "README.md",
+    "Images/InspectorImage.png",
+    "Images/WindowLocation.png",
+    "Images/LookUp.png",
+    "Images/LookUp.png",
+    "Library/Search/propertyDatabase.db_8aa8aa00d00c44ea872196d6281f9c67_temp",
+    "Temp/ADB-Refresh9542271ca738c2e4a86a890253eab684",
+    "Library/Search/propertyAliases.db_6d75c095b6cc4dca88c09b3af73822e9_temp",
+    "Pasted.md",
+    "Pasted image 20240513145312.png",
+    "Library/Artifacts/cb/cb7dad0595fea1f76c340802ed7c6787",
+    "Library/TempArtifacts/Primary/5a12e596af88cc647a7a6c61366fc6d2",
     "Assets/StateMachineFramework/CHANGELOG.md",
-    "Assets/StateMachineFramework/LICENSE.md",
     "Assets/StateMachineFramework/README.md",
+    "Assets/StateMachineFramework/LICENSE.md",
+    "Pasted image 20240505201410.png",
+    "Images/LogoMain.png",
     "Images/TreeEntryTransition.png",
     "Welcome.md"
   ]

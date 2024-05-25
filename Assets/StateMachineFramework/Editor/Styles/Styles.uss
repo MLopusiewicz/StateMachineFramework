@@ -24,6 +24,7 @@
     align-items: center;
     justify-content: center;
     height: 100%;
+    translate: 5px 0;
 }
 
 .transition-action:hover .transition-line {
@@ -92,4 +93,34 @@
     --minor-line__width: 0.2;
     --minor-line__color: var(--unity-colors-tooltip-border);
     background-color: var(--unity-colors-default-background);
+}
+
+#LockButton {
+    width: 32px;
+    height: 32px;
+    flex-shrink: 0;
+    position: absolute;
+    bottom: 20px;
+    right: 20px;
+}
+
+#LockButton .unity-toggle__checkmark {
+    background-image: var(--unity-icons-lock);
+    width: 32px;
+    height: 32px;
+    flex-shrink: 0;
+}
+
+#LockButton:checked .unity-toggle__checkmark {
+    background-image: var(--unity-icons-lock-checked);
+    width: 32px;
+    height: 32px;
+    flex-shrink: 0;
+}
+
+#LockButton:hover {
+    width: 32px;
+    height: 32px;
+    flex-shrink: 0;
+    scale: 1.2 1.2;
 }

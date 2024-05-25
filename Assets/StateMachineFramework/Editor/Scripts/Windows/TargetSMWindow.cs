@@ -8,7 +8,7 @@ public class TargetSMWindow : SMWindow {
 
     public static List<TargetSMWindow> windowsList = new();
 
-    public StateMachineFramework.Runtime.StateMachineFramework target;
+    public StateMachineFramework.Runtime.StateMachine target;
     public override void CreateGUI() {
         base.CreateGUI();
         windowsList.Add(this);
@@ -16,7 +16,7 @@ public class TargetSMWindow : SMWindow {
     }
 
 
-    public void Init(StateMachineFramework.Runtime.StateMachineFramework sm) {
+    public void Init(StateMachineFramework.Runtime.StateMachine sm) {
         this.titleContent = new GUIContent(sm.gameObject.name, this.icon);
         this.target = sm;
     }

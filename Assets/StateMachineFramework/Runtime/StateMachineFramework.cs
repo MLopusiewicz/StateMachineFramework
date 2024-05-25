@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 namespace StateMachineFramework.Runtime {
 
-    public class StateMachineFramework : MonoBehaviour {
+    public class StateMachine : MonoBehaviour {
 
         public ParameterController parameters;
         public StateMachineLogic logic;
@@ -20,27 +20,38 @@ namespace StateMachineFramework.Runtime {
         List<IParameter> _parameters = new();
 
         public List<Node> Nodes => _nodes;
-        public List<IParameter> Parameters => _parameters;
+        public List<IParameter> GetAllParameters => _parameters;
 
         public TreeNode Root => (TreeNode)_nodes[0];
         public SpecialNode anyState => (SpecialNode)Nodes[1];
-
+        bool UpdateInterruptToken;
         private void Awake() {
             logic = new StateMachineLogic(_nodes, _parameters);
             parameters = new ParameterController(_parameters);
-
+            logic.OnNodeExit += InterrupUpdate;
             foreach (var node in _nodes) {
                 foreach (var behaviour in node.behaviours) {
-                    behaviour.Awake();
+                    behaviour.Awake(this.gameObject);
                 }
             }
         }
+
+        private void InterrupUpdate(Node node) {
+            UpdateInterruptToken = true;
+        }
+
         private void Update() {
+            UpdateInterruptToken = false;
             foreach (var node in logic.activeNodes) {
                 foreach (var behaviour in node.behaviours) {
+                    if (UpdateInterruptToken)
+                        break;
                     behaviour.Update();
                 }
+                if (UpdateInterruptToken)
+                    break;
             }
+
         }
 
         private void Start() {

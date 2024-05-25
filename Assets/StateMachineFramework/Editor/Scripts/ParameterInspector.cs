@@ -160,8 +160,8 @@ namespace StateMachineFramework.Editor {
                 }
             }
 
-            for (int i = 0; i < editor.stateMachine.Parameters.Count; i++) {
-                var param = editor.stateMachine.Parameters[i];
+            for (int i = 0; i < editor.stateMachine.GetAllParameters.Count; i++) {
+                var param = editor.stateMachine.GetAllParameters[i];
                 var t = paramTypeLUT[param.GetType()];
                 if (param.Key.Contains(searchString) && search.HasFlag(t)) {
                     paramList.GetRootElementForIndex(i).SetDisplay(true);
@@ -172,7 +172,7 @@ namespace StateMachineFramework.Editor {
         }
 
         void RefreshList() {
-            paramList.itemsSource = new List<IParameter>(editor.stateMachine.Parameters);
+            paramList.itemsSource = new List<IParameter>(editor.stateMachine.GetAllParameters);
             paramList.Rebuild();
         }
 

@@ -4,7 +4,7 @@ using UnityEngine.UIElements;
 
 
 namespace StateMachineFramework.Editor {
-    [CustomEditor(typeof(Runtime.StateMachineFramework))]
+    [CustomEditor(typeof(Runtime.StateMachine))]
     public class SMFInspector : UnityEditor.Editor {
         public VisualTreeAsset uxml;
         static TargetSMWindow window; 
@@ -35,7 +35,7 @@ namespace StateMachineFramework.Editor {
             }
 
             window = EditorWindow.CreateInstance<TargetSMWindow>();
-            window.Init(target as Runtime.StateMachineFramework);
+            window.Init(target as Runtime.StateMachine);
         }
     }
 }

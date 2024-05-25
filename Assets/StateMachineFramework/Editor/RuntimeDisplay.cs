@@ -3,25 +3,30 @@ namespace StateMachineFramework.Editor {
 
     public class RuntimeDisplay {
         private StateMachineEditor editor;
-
+        
         public RuntimeDisplay(StateMachineEditor editor) {
             this.editor = editor;
 
         }
+
         public void Init() {
-            editor.stateMachine.logic.OnNodeEnter += Highlight;
-            editor.stateMachine.logic.OnNodeExit += RemoveHighlight;
-            editor.depthPanel.OnDepthChanged += DepthChanged;
-            DepthChanged(editor.depthPanel.ActiveTree);
+            if (editor.stateMachine != null) {
+                editor.stateMachine.logic.OnNodeEnter += Highlight;
+                editor.stateMachine.logic.OnNodeExit += RemoveHighlight;
+                editor.depthPanel.OnDepthChanged += DepthChanged;
+                DepthChanged(editor.depthPanel.ActiveTree);
+            }
         }
+
         public void Clear() {
-            editor.stateMachine.logic.OnNodeEnter -= Highlight;
-            editor.stateMachine.logic.OnNodeExit -= RemoveHighlight;
-            editor.depthPanel.OnDepthChanged -= DepthChanged;
+            if (editor.stateMachine != null) {
+                editor.stateMachine.logic.OnNodeEnter -= Highlight;
+                editor.stateMachine.logic.OnNodeExit -= RemoveHighlight;
+                editor.depthPanel.OnDepthChanged -= DepthChanged;
+            }
 
         }
-        private void DepthChanged(TreeNode tree) {
-
+        private void DepthChanged(TreeNode tree) { 
             foreach (var a in editor.stateMachine.logic.activeNodes) {
                 if (editor.depthPanel.IsInScope(a))
                     editor.nodeView.nodes[a].AddToClassList("active");

@@ -1,3 +1,5 @@
+using Codice.CM.Common;
+using Codice.CM.WorkspaceServer.Tree;
 using System;
 using UnityEditor;
 using UnityEditor.UIElements;
@@ -68,12 +70,15 @@ namespace StateMachineFramework.View {
 
             var t = prop.managedReferenceValue.GetType();
             SetupScriptButton(t.Name);
-
+            int depth = prop.depth + 1;
             while (enumerator.MoveNext()) {
                 var z = enumerator.Current as SerializedProperty;
+                if (z.depth > depth)
+                    continue;
                 var f = new PropertyField(z);
                 f.Bind(z.serializedObject);
                 propertyContainer.Add(f);
+                 
             }
         }
 
@@ -92,8 +97,10 @@ namespace StateMachineFramework.View {
         private void ScriptPressed(MouseDownEvent evt) {
             if (evt.clickCount == 1) {
                 var z = AssetDatabase.LoadAssetAtPath<UnityEngine.Object>(AssetDatabase.GUIDToAssetPath(path));
-                if (z != null)
-                    UnityEditor.Selection.activeObject = z;
+                EditorGUIUtility.PingObject(z);
+                //if (z != null)
+                //    UnityEditor.Selection.activeObject = z;
+                evt.StopImmediatePropagation();
             }
 
         }

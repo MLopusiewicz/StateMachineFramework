@@ -17,7 +17,16 @@ namespace StateMachineFramework.Editor {
             UnityEditor.Selection.selectionChanged += SelectionUpdated;
         }
         void SelectionUpdated() {
-            editor.SetDisplay(UnityEditor.Selection.activeGameObject?.GetComponent<Runtime.StateMachineFramework>());
+            var g = UnityEditor.Selection.GetFiltered<GameObject>(SelectionMode.Assets);
+            foreach (var a in g) {
+                var s = a.GetComponentInChildren<Runtime.StateMachine>();
+                if (s != null) {
+                    editor.SetDisplay(s);
+                    return;
+                }
+            }
+
+            editor.SetDisplay(UnityEditor.Selection.activeGameObject?.GetComponent<Runtime.StateMachine>());
         }
 
         protected void OnDestroy() {

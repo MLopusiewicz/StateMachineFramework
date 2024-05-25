@@ -1,5 +1,5 @@
 <ui:UXML xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements" xsi="http://www.w3.org/2001/XMLSchema-instance" engine="UnityEngine.UIElements" editor="UnityEditor.UIElements" noNamespaceSchemaLocation="../../../../UIElementsSchema/UIElements.xsd" editor-extension-mode="True">
-    <Style src="project://database/Assets/StateMachineFramework/Editor/Styles/Styles.uss?fileID=7433441132597879392&amp;guid=03f431e0bd5cd6343b05ce45a01f75c3&amp;type=3#Styles[UNSUPPORTED_IN_UI_BUILDER]" />
+    <Style src="project://database/Assets/StateMachineFramework/Editor/Styles/Styles.uss?fileID=7433441132597879392&amp;guid=03f431e0bd5cd6343b05ce45a01f75c3&amp;type=3#Styles" />
     <Style src="project://database/Assets/StateMachineFramework/Editor/Styles/BehaviourStyle.uss?fileID=7433441132597879392&amp;guid=8389f14cb193d864ea530785942a7094&amp;type=3#BehaviourStyle" />
     <Style src="project://database/Assets/StateMachineFramework/Editor/Styles/ConditionStyles.uss?fileID=7433441132597879392&amp;guid=e7409261fd26d634e8ed199a04377ae9&amp;type=3#ConditionStyles" />
     <Style src="project://database/Assets/StateMachineFramework/Editor/Styles/DepthPanel.uss?fileID=7433441132597879392&amp;guid=06ff9020cdac4214c9ccf9f2aaf6c980&amp;type=3#DepthPanel" />
@@ -45,6 +45,8 @@
                 </ui:VisualElement>
             </ui:VisualElement>
         </ui:VisualElement>
+        <ui:VisualElement name="LockButton" />
+        <ui:Toggle name="LockButton" focusable="true" />
         <ui:VisualElement name="ParameterTab" style="border-right-width: 1px; border-right-color: rgb(48, 48, 48);">
             <ui:VisualElement name="ControlPanel" style="flex-grow: 0; flex-direction: row; flex-shrink: 0;">
                 <uie:ToolbarPopupSearchField name="SearchBar" style="flex-grow: 1; flex-shrink: 1; width: 295px; min-width: 0; min-height: 0;" />

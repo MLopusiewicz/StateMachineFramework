@@ -170,8 +170,9 @@ namespace StateMachineFramework.Editor {
 
         private void NodeSelection(MouseUpEvent x) {
 
-            NodeVE target = x.target as NodeVE;
 
+            NodeVE target = x.target as NodeVE;
+            
 
             foreach (var a in selectedNodes) {
                 a.RemoveFromClassList("selected");

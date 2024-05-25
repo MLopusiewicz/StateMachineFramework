@@ -7,11 +7,12 @@ namespace StateMachineFramework.Editor {
             Undo.undoRedoPerformed += Redraw;
             this.editor = editor;
         }
-        public void Redraw() {
+        public void Redraw() { 
             editor.nodeView.Init(editor.depthPanel.ActiveTree);
             editor.transitions.Redraw();
             editor.transitionInspector.Redraw();
             editor.nodeInspector.Redraw();
+
         }
 
         public void Dispose() {

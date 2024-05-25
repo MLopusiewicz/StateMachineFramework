@@ -41,15 +41,15 @@ namespace StateMachineFramework.View {
             this.RegisterCallback<WheelEvent>(OnScrolled);
             this.RegisterCallback<MouseDownEvent>(OnMouseDown);
             this.RegisterCallback<MouseMoveEvent>(OnMouseMove);
-            this.RegisterCallback<MouseUpEvent>(OnMouseUp);
-
+            this.RegisterCallback<MouseUpEvent>(OnMouseUp); 
             this.RegisterCallback<KeyDownEvent>(Recenter, TrickleDown.TrickleDown);
         }
 
         private void Recenter(KeyDownEvent evt) {
-            if (evt.keyCode == KeyCode.A) {
-                Recenter();
-            }
+            if (evt.target == this)
+                if (evt.keyCode == KeyCode.A) {
+                    Recenter();
+                }
         }
 
         void SetupContainers() {
@@ -67,7 +67,7 @@ namespace StateMachineFramework.View {
                 MoveContainer(-Vector2.right * 10 * evt.delta.y);
             } else {
 
-                zoomScale += evt.delta.y * ZoomMultiplier;
+                zoomScale -= evt.delta.y * ZoomMultiplier;
                 zoomScale = Mathf.Clamp(zoomScale, ZoomMin, ZoomMax);
                 Zoom(zoomScale, evt.mousePosition);
             }

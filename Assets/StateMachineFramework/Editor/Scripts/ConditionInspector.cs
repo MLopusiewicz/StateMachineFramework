@@ -34,7 +34,7 @@ namespace StateMachineFramework.Editor {
 
             conditionsList.itemsSource = editor.serialization.TranstionConditions(displayedTransition);
             conditionsList.RefreshItems();
-            searchPopup.Init(editor.stateMachine.Parameters.Select(x => x.Key).ToList());
+            searchPopup.Init(editor.stateMachine.GetAllParameters.Select(x => x.Key).ToList());
 
 
             if (transition.source == editor.stateMachine.anyState && transition.conditions.Count == 0)
@@ -66,7 +66,7 @@ namespace StateMachineFramework.Editor {
 
             var g = editor.serialization.ConditionsList(displayedTransition);
             g.arraySize++;
-            UpdateParameter(editor.stateMachine.Parameters[0].Key, g.arraySize - 1);
+            UpdateParameter(editor.stateMachine.GetAllParameters[0].Key, g.arraySize - 1);
             editor.serialization.Apply();
         }
 
@@ -77,9 +77,9 @@ namespace StateMachineFramework.Editor {
 
             searchPopup.transform.position = ve.parent.parent.layout.position;
             searchPopup.transform.position += Vector3.up * searchPopup.layout.height;
-            searchPopup.transform.position += Vector3.right * 33; 
+            searchPopup.transform.position += Vector3.right * 33;
 
-            searchPopup.style.width = ve.layout.width; 
+            searchPopup.style.width = ve.layout.width;
 
             searchPopup.OnEntrySelected += ApplyChange;
         }
@@ -128,7 +128,8 @@ namespace StateMachineFramework.Editor {
             Redraw();
         }
         public void Redraw() {
-            ShowConditions(displayedTransition);
+            if (displayedTransition != null)
+                ShowConditions(displayedTransition);
         }
 
         public void Clear() {

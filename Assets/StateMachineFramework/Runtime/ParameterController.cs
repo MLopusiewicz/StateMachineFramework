@@ -29,6 +29,9 @@ namespace StateMachineFramework.Runtime {
         public void SetTrigger(string name) {
             SetValue(ParameterType.Trigger, name, true);
         }
+        public void ResetTrigger(string name) {
+            SetValue(ParameterType.Trigger, name, false);
+        }
 
         public void SetBool(string name, bool value) {
             SetValue(ParameterType.Bool, name, value);
@@ -57,14 +60,14 @@ namespace StateMachineFramework.Runtime {
 
         void SetValue<T>(ParameterType type, string name, T value) {
             if (!LUT[type].ContainsKey(name)) {
-                Debug.Log($"[SM] Parameter not found: {name}({type})");
+                Debug.LogWarning($"[SM] {type} not found: {name}");
                 return;
             }
             ((Parameter<T>)LUT[type][name]).Value = value;
         }
         T GetValue<T>(ParameterType type, string name) {
             if (!LUT[type].ContainsKey(name)) {
-                Debug.Log($"[SM] Parameter not found: {name}({type})");
+                Debug.LogWarning($"[SM] Parameter not found: {name}({type})");
                 return default;
             }
             return ((Parameter<T>)LUT[type][name]).Value;

@@ -37,7 +37,7 @@ namespace StateMachineFramework.View {
         Label label;
         TextField textField;
         Node data;
-
+        public bool IsRenaming { get; private set; }
         public NodeVE() {
             this.usageHints = UsageHints.DynamicTransform;
             SetupContainters();
@@ -46,6 +46,7 @@ namespace StateMachineFramework.View {
         }
 
         private void OnLostFocus(FocusOutEvent evt) {
+            IsRenaming = false;
             label.SetDisplay(true);
             textField.SetDisplay(false);
         }
@@ -58,7 +59,7 @@ namespace StateMachineFramework.View {
             RenameState();
         }
         public void RenameState() {
-
+            IsRenaming = true;
             label.SetDisplay(false);
             textField.SetDisplay(true);
             textField.Focus();

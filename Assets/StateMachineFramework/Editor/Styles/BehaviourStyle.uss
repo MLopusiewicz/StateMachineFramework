@@ -73,3 +73,7 @@
 .behaviour-header-container:hover .behaviour-dropdown-arrow {
     background-image: var(--unity-icons-foldout-focus);
 }
+
+.behaviour .unity-list-view .unity-foldout .unity-base-field__label {
+    display: none;
+}
