@@ -26,7 +26,7 @@ namespace StateMachineFramework.Editor {
                 }
             }
 
-            editor.SetDisplay(UnityEditor.Selection.activeGameObject?.GetComponent<Runtime.StateMachine>());
+            //editor.SetDisplay(UnityEditor.Selection.activeGameObject?.GetComponent<Runtime.StateMachine>());
         }
 
         protected void OnDestroy() {

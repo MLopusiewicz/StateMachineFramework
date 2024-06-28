@@ -19,11 +19,12 @@ namespace StateMachineFramework.Runtime {
         [SerializeReference]
         List<IParameter> _parameters = new();
 
+        public TreeNode RootTree => (TreeNode)_nodes[0];
+        public Node AnyState => _nodes[1];
         public List<Node> Nodes => _nodes;
         public List<IParameter> GetAllParameters => _parameters;
 
-        public TreeNode Root => (TreeNode)_nodes[0];
-        public SpecialNode anyState => (SpecialNode)Nodes[1];
+
         bool UpdateInterruptToken;
         private void Awake() {
             logic = new StateMachineLogic(_nodes, _parameters);
@@ -36,8 +37,14 @@ namespace StateMachineFramework.Runtime {
             }
         }
 
-        private void InterrupUpdate(Node node) {
-            UpdateInterruptToken = true;
+        private void Start() {
+            foreach (var node in _nodes) {
+                foreach (var behaviour in node.behaviours) {
+                    behaviour.Start();
+                }
+            }
+
+            logic.Start();
         }
 
         private void Update() {
@@ -54,8 +61,9 @@ namespace StateMachineFramework.Runtime {
 
         }
 
-        private void Start() {
-            logic.Start();
+
+        private void InterrupUpdate(Node node) {
+            UpdateInterruptToken = true;
         }
         private void OnDestroy() {
             foreach (var node in logic.nodes) {

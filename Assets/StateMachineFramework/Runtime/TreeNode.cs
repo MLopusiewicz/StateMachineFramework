@@ -34,6 +34,9 @@ namespace StateMachineFramework.Runtime {
                 a.parent = this;
             }
         }
+        public override string ToString() {
+            return $"Tree: {name}";
+        }
 
     }
 }

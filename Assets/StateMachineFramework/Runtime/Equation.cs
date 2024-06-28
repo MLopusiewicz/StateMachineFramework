@@ -12,6 +12,9 @@ namespace StateMachineFramework.Runtime {
         public override bool Evaluate(IParameter parameter) {
             return ((TriggerParameter)parameter).Value;
         }
+        public override string ToString() {
+            return "Triggered";
+        }
     }
 
     [Serializable]
@@ -40,6 +43,9 @@ namespace StateMachineFramework.Runtime {
             }
             return false;
         }
+        public override string ToString() {
+            return $"? {type}: {value}";
+        }
     }
 
     [Serializable]
@@ -67,6 +73,10 @@ namespace StateMachineFramework.Runtime {
             }
             return false;
         }
+
+        public override string ToString() {
+            return $"? {type}: {value}";
+        }
     }
 
     [Serializable]
@@ -75,6 +85,10 @@ namespace StateMachineFramework.Runtime {
 
         public override bool Evaluate(IParameter parameter) {
             return ((BoolParameter)parameter).Value == value;
+        }
+
+        public override string ToString() {
+            return $"? is: {value}";
         }
     }
 }

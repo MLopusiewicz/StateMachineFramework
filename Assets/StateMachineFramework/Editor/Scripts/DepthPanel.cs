@@ -7,7 +7,7 @@ using UnityEngine.UIElements;
 namespace StateMachineFramework.Editor {
     public class DepthPanel {
 
-        public Action<TreeNode> OnDepthChanged; 
+        public Action<TreeNode> OnDepthChanged;
         public TreeNode ActiveTree => depth[^1];
 
         StateMachineEditor w;
@@ -30,7 +30,7 @@ namespace StateMachineFramework.Editor {
             depth.Clear();
             depthContainer.Clear();
             nodeButtons.Clear();
-            AddDepthLayer(w.stateMachine.Root, false);
+            AddDepthLayer(w.stateMachine.RootTree, false);
         }
 
         private void AddNodeToActive(Node node) {

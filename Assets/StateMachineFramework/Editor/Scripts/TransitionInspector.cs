@@ -59,7 +59,7 @@ namespace StateMachineFramework.Editor {
                 sourceText = t.source.name;
                 c.text = $"{sourceText} -> {t.target.name}";
 
-                if (t.source == editor.stateMachine.anyState && t.conditions.Count == 0)
+                if (t.source == editor.stateMachine.AnyState && t.conditions.Count == 0)
                     c.AddToClassList("error-label");
             };
             transitionsList.itemsRemoved += TransitionRemoved;

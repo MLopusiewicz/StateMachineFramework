@@ -259,6 +259,8 @@ MonoBehaviour:
   references:
     version: 2
     RefIds:
+    - rid: -2
+      type: {class: , ns: , asm: }
     - rid: 6660633874549702779
       type: {class: FloatParameter, ns: StateMachineFramework.Runtime, asm: LoneTower.StateMachineFramework}
       data:
@@ -512,6 +514,8 @@ MonoBehaviour:
   _nodes:
   - rid: 7027765252790943778
   - rid: 7027765252790943779
+  - rid: 9177649446272892928
+  - rid: 9177649446272892932
   _parameters: []
   references:
     version: 2
@@ -523,7 +527,9 @@ MonoBehaviour:
         position: {x: 0, y: 0}
         behaviours: []
         _transitions: []
-        nodes: []
+        nodes:
+        - rid: 9177649446272892928
+        - rid: 9177649446272892932
         enterPos: {x: 0, y: 200}
         exitPos: {x: 254.66669, y: 320.66666}
         anyPos: {x: 0, y: 0}
@@ -536,6 +542,51 @@ MonoBehaviour:
         _transitions: []
         canBeTarget: 0
         canBeSource: 1
+    - rid: 9177649446272892928
+      type: {class: Node, ns: StateMachineFramework.Runtime, asm: LoneTower.StateMachineFramework}
+      data:
+        name: new node
+        position: {x: 434, y: 141}
+        behaviours: []
+        _transitions:
+        - rid: 9177649446272892933
+        - rid: 9177649446272892940
+    - rid: 9177649446272892932
+      type: {class: TreeNode, ns: StateMachineFramework.Runtime, asm: LoneTower.StateMachineFramework}
+      data:
+        name: new Tree
+        position: {x: 548, y: 307}
+        behaviours: []
+        _transitions:
+        - rid: 9177649446272892936
+        nodes: []
+        enterPos: {x: 0, y: 200}
+        exitPos: {x: 500, y: 200}
+        anyPos: {x: 0, y: 0}
+    - rid: 9177649446272892933
+      type: {class: Transition, ns: StateMachineFramework.Runtime, asm: LoneTower.StateMachineFramework}
+      data:
+        source:
+          rid: 9177649446272892928
+        target:
+          rid: 9177649446272892932
+        conditions: []
+    - rid: 9177649446272892936
+      type: {class: Transition, ns: StateMachineFramework.Runtime, asm: LoneTower.StateMachineFramework}
+      data:
+        source:
+          rid: 9177649446272892932
+        target:
+          rid: 9177649446272892928
+        conditions: []
+    - rid: 9177649446272892940
+      type: {class: Transition, ns: StateMachineFramework.Runtime, asm: LoneTower.StateMachineFramework}
+      data:
+        source:
+          rid: 9177649446272892928
+        target:
+          rid: 9177649446272892932
+        conditions: []
 --- !u!4 &2091389399
 Transform:
   m_ObjectHideFlags: 0

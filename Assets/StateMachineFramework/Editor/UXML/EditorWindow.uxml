@@ -8,6 +8,7 @@
     <Style src="project://database/Assets/StateMachineFramework/Editor/Styles/ParameterStyles.uss?fileID=7433441132597879392&amp;guid=951626f9c187b184fb2d0ce57375e9e1&amp;type=3#ParameterStyles" />
     <Style src="project://database/Assets/StateMachineFramework/Editor/Styles/ParameterTabSyles.uss?fileID=7433441132597879392&amp;guid=aa496522f061fdf4dbbeea1c7867652c&amp;type=3#ParameterTabSyles" />
     <Style src="project://database/Assets/StateMachineFramework/Editor/Styles/SearchPopupStyles.uss?fileID=7433441132597879392&amp;guid=eff95a65f1f826b45ac98f8588bfd914&amp;type=3#SearchPopupStyles" />
+    <Style src="project://database/Assets/StateMachineFramework/Editor/Styles/TransitionStyles.uss?fileID=7433441132597879392&amp;guid=821732a2712a3584a8b41776281b5a08&amp;type=3#TransitionStyles[UNSUPPORTED_IN_UI_BUILDER]" />
     <ui:VisualElement name="Container" style="flex-grow: 1; flex-direction: row-reverse; align-items: stretch;">
         <ui:VisualElement name="MapTab" focusable="false" picking-mode="Ignore" style="flex-grow: 1;">
             <ui:VisualElement name="DepthPanel" style="flex-shrink: 0; height: 20px; flex-direction: row; justify-content: space-between;">

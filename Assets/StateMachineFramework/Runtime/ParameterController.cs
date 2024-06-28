@@ -14,9 +14,9 @@ namespace StateMachineFramework.Runtime {
         {typeof(FloatParameter), ParameterType.Float},
         {typeof(IntParameter), ParameterType.Int},
         {typeof(BoolParameter), ParameterType.Bool},
-    };
+    }; 
+        public ParameterController(List<IParameter> parameters) { 
 
-        public ParameterController(List<IParameter> parameters) {
             LUT = new();
             foreach (var paramType in (ParameterType[])Enum.GetValues(typeof(ParameterType))) {
                 LUT.Add(paramType, new Dictionary<string, IParameter>());
@@ -29,6 +29,11 @@ namespace StateMachineFramework.Runtime {
         public void SetTrigger(string name) {
             SetValue(ParameterType.Trigger, name, true);
         }
+        public void FlashTrigger(string name) {
+            SetValue(ParameterType.Trigger, name, true);
+            SetValue(ParameterType.Trigger, name, false);
+        }
+
         public void ResetTrigger(string name) {
             SetValue(ParameterType.Trigger, name, false);
         }
@@ -72,5 +77,8 @@ namespace StateMachineFramework.Runtime {
             }
             return ((Parameter<T>)LUT[type][name]).Value;
         }
+
+
+
     }
 }

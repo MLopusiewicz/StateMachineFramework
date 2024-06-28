@@ -1,4 +1,5 @@
 ﻿using System;
+using UnityEditor.Overlays;
 using UnityEngine;
 
 namespace StateMachineFramework.Runtime {
@@ -10,6 +11,10 @@ namespace StateMachineFramework.Runtime {
         public Equation equation;
         public bool Evaluate() {
             return equation.Evaluate(parameter);
+        }
+
+        public override string ToString() {
+            return $"? {parameter} | {equation}";
         }
 
     }

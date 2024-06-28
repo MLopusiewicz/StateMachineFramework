@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Security.Cryptography;
 using UnityEngine;
-using UnityEngine.WSA;
 
 namespace StateMachineFramework.Runtime {
     public class StateMachineLogic {
@@ -10,24 +10,24 @@ namespace StateMachineFramework.Runtime {
         public List<Node> activeNodes = new();
         public List<Node> nodes;
 
+        public Node AnyStateNode => nodes[1];
+        public TreeNode RootTree => (TreeNode)nodes[0];
+
         int transitionCount = 0;
         int transitionsPerFrameTreshhold = 30;
         Transition overflownTransition;
 
         public StateMachineLogic(List<Node> nodes, List<IParameter> parameters) {
             this.nodes = nodes;
-            foreach (var a in nodes) {
-                a.OnEntered += NodeEntered;
-                a.OnExited += NodeExited;
-            }
             foreach (var a in parameters) {
                 a.OnValueChanged += CheckTransitions;
             }
+
         }
 
         private void CheckTransitions() {
             transitionCount = 0;
-            foreach (var transition in nodes[1].transitions) {
+            foreach (var transition in AnyStateNode.transitions) {
                 if (transition.conditions.Count == 0)
                     continue;
 
@@ -50,18 +50,30 @@ namespace StateMachineFramework.Runtime {
             }
         }
 
-        public void Move(Transition t) {
+        void Move(Transition t) {
             if (t == null)
                 return;
 
+            //Reset triggers 
+            foreach (var a in t.conditions) {
+                if (a.parameter is TriggerParameter tp) {
+                    tp.SetValue(false);
+                }
+            }
+
+            transitionCount++;
             if (transitionCount > transitionsPerFrameTreshhold) {
                 Debug.LogError("[SMF] Transition treshhold per fame exceeded. Moving execution to new frame");
                 overflownTransition = t;
                 return;
             }
+            var activeIndex = activeNodes.IndexOf(t.source);
 
-            transitionCount++;
-            if (t.source == nodes[1])
+            //Exit all children. Bottoms up /\ 
+            for (int i = activeNodes.Count - 1; i >= activeIndex + 1; i--)
+                ExitNode(activeNodes[i]);
+
+            if (t.source == AnyStateNode)
                 t.source = activeNodes[^1];
 
             bool reentry = activeNodes.Contains(t.target);
@@ -72,44 +84,46 @@ namespace StateMachineFramework.Runtime {
             var targetAncestors = SMHelper.GetAncestors(t.target);
 
             while (!targetAncestors.Contains(commonAncestor)) {
-                commonAncestor.Exit();
+                ExitNode(commonAncestor);
                 commonAncestor = commonAncestor.parent;
             }
 
             int index = targetAncestors.IndexOf(commonAncestor);
             for (int i = index - 1; i >= 0; i--) {
-                targetAncestors[i].Enter();
+                EnterNode(targetAncestors[i]);
             }
 
             if (reentry) {
-                t.target.Exit();
-                t.target.Enter();
+                ExitNode(t.target);
+                EnterNode(t.target);
             }
 
-            //Reset triggers 
-            foreach (var a in t.conditions) {
-                if (a.parameter is TriggerParameter tp) {
-                    tp.SetValue(false);
-                }
-            }
+
         }
 
-        private void NodeExited(Node node) {
-            activeNodes.Remove(node);
-            OnNodeExit?.Invoke(node);
-        }
 
-        private void NodeEntered(Node node) {
+        void EnterNode(Node node) {
+            node.Enter();
+            OnNodeEnter?.Invoke(node);
+
             activeNodes.Add(node);
             var t = GetFirstValid(node);
             if (t != null)
                 Move(t);
-
             else if (node is TreeNode tree) {
 
             }
-            OnNodeEnter?.Invoke(node);
+
         }
+        void ExitNode(Node node) {
+            node.Exit();
+            activeNodes.Remove(node);
+            OnNodeExit?.Invoke(node);
+
+        }
+
+
+
 
         public Transition GetFirstValid(Node n) {
             foreach (var a in n.transitions) {
@@ -120,18 +134,19 @@ namespace StateMachineFramework.Runtime {
         }
 
         internal void Start() {
-            nodes[0].Enter();
+            EnterNode(RootTree);
         }
 
         public void EnterState(string state) {
             transitionCount = 0;
             foreach (var a in nodes) {
                 if (a.name == state) {
-                    Move(new Transition() { source = nodes[1], target = a });
+                    Move(new Transition() { source = AnyStateNode, target = a });
                     return;
                 }
             }
         }
+
         public void Update() {
             if (overflownTransition != null) {
                 transitionCount = 0;

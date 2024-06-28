@@ -43,8 +43,8 @@ namespace StateMachineFramework.Editor {
 
             MakeNodeVE(tree.enterNode).AddToClassList(NodeVE.NODE_SPECIAL_ENTER);
             MakeNodeVE(tree.exitNode).AddToClassList(NodeVE.NODE_SPECIAL_EXIT);
-            editor.stateMachine.anyState.position = tree.anyPos;
-            MakeNodeVE(editor.stateMachine.anyState).AddToClassList(NodeVE.NODE_SPECIAL_ANY);
+            editor.stateMachine.AnyState.position = tree.anyPos;
+            MakeNodeVE(editor.stateMachine.AnyState).AddToClassList(NodeVE.NODE_SPECIAL_ANY);
             editor.depthPanel.AddDepthLayer(tree);
         }
 

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Runtime.Versioning;
 using UnityEngine;
 
 namespace StateMachineFramework.Runtime {
@@ -16,6 +17,9 @@ namespace StateMachineFramework.Runtime {
                     return false;
             }
             return true;
+        }
+        public override string ToString() {
+            return $"{source.name} -> {target.name}";
         }
     }
 }

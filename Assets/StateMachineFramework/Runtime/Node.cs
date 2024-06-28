@@ -1,3 +1,4 @@
+using Sirenix.OdinInspector.Editor;
 using System;
 using System.Collections.Generic;
 using UnityEngine;
@@ -39,7 +40,9 @@ namespace StateMachineFramework.Runtime {
             }
             OnExited?.Invoke(this);
         }
-
+        public override string ToString() {
+            return $"Node: {name}";
+        }
 
     }
 }

@@ -1,5 +1,4 @@
-﻿using Sirenix.Utilities.Editor;
-using StateMachineFramework.Editor;
+﻿using StateMachineFramework.Editor;
 using StateMachineFramework.Runtime;
 using UnityEngine;
 using UnityEngine.UIElements;
@@ -61,7 +60,7 @@ public class StateMachineEditor {
         depthPanel.Init();
         serialization.Init(this.stateMachine);
         parameterTab.Init();
-        nodeView.Init(stateMachine.Root);
+        nodeView.Init(stateMachine.RootTree);
         transitions.Redraw();
         if (Application.isPlaying)
             runtime.Init();

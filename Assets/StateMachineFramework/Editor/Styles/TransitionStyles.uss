@@ -1,1 +1,37 @@
-VisualElement {}
+.transition-anchor {
+    position: absolute;
+    width: 0;
+    height: 0;
+    align-items: center;
+    justify-content: flex-end;
+}
+
+.transition-line {
+    background-color: rgb(188, 184, 170);
+    flex-shrink: 0;
+    transform-origin: bottom;
+    width: 3px;
+    align-items: center;
+    justify-content: center;
+    height: 100%;
+    translate: 0 0;
+}
+
+.transition-action:hover .transition-line {
+    background-color: rgb(136, 136, 136);
+}
+
+.transition-arrow {
+    width: 15px;
+    height: 15px;
+    background-image: var(--unity-icons-foldout-pressed);
+    rotate: -90deg;
+    -unity-background-image-tint-color: rgb(255, 255, 255);
+}
+
+.transition-action {
+    width: 30px;
+    flex-shrink: 0;
+    align-items: center;
+    translate: 5px 0;
+}

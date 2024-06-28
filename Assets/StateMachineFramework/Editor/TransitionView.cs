@@ -41,7 +41,7 @@ namespace StateMachineFramework.Editor {
             ves.Clear();
             trans.Clear();
 
-            foreach (var transition in editor.stateMachine.anyState.transitions) {
+            foreach (var transition in editor.stateMachine.AnyState.transitions) {
                 if (editor.depthPanel.IsInScope(transition.target))
                     CreateTransition(transition);
             }

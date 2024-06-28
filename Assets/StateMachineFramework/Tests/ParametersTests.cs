@@ -6,7 +6,7 @@ using UnityEngine;
 public class ParametersTests { 
     public GameObject go;
     ParameterController GetController() {
-        return new ParameterController(new List<IParameter> {
+        return new ParameterController(new List<IParameter>{
             new TriggerParameter("Trigger", false),
             new BoolParameter("Bool", false),
             new FloatParameter("Float", 0),

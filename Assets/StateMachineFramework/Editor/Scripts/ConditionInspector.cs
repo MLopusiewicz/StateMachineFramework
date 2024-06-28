@@ -37,7 +37,7 @@ namespace StateMachineFramework.Editor {
             searchPopup.Init(editor.stateMachine.GetAllParameters.Select(x => x.Key).ToList());
 
 
-            if (transition.source == editor.stateMachine.anyState && transition.conditions.Count == 0)
+            if (transition.source == editor.stateMachine.AnyState && transition.conditions.Count == 0)
                 emptyTransitionError.SetDisplay(true);
             else
                 emptyTransitionError.SetDisplay(false);
