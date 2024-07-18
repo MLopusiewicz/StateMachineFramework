@@ -67,14 +67,17 @@ namespace StateMachineFramework.Runtime {
                 overflownTransition = t;
                 return;
             }
-            var activeIndex = activeNodes.IndexOf(t.source);
-
-            //Exit all children. Bottoms up /\ 
-            for (int i = activeNodes.Count - 1; i >= activeIndex + 1; i--)
-                ExitNode(activeNodes[i]);
 
             if (t.source == AnyStateNode)
                 t.source = activeNodes[^1];
+
+            var activeIndex = activeNodes.IndexOf(t.source);
+
+            //Exit all children  Bottoms up /\ 
+            for (int i = activeNodes.Count - 1; i >= activeIndex + 1; i--)
+                ExitNode(activeNodes[i]);
+
+           
 
             bool reentry = activeNodes.Contains(t.target);
 
