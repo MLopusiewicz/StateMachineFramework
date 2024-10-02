@@ -17,6 +17,8 @@ namespace StateMachineFramework.Runtime {
         int transitionsPerFrameTreshhold = 30;
         Transition overflownTransition;
 
+        bool transitionsBlocked = false;
+
         public StateMachineLogic(List<Node> nodes, List<IParameter> parameters) {
             this.nodes = nodes;
             foreach (var a in parameters) {
@@ -25,7 +27,10 @@ namespace StateMachineFramework.Runtime {
 
         }
 
-        private void CheckTransitions() {
+        public void CheckTransitions() {
+            if (transitionsBlocked)
+                return;
+
             transitionCount = 0;
             foreach (var transition in AnyStateNode.transitions) {
                 if (transition.conditions.Count == 0)
@@ -54,6 +59,7 @@ namespace StateMachineFramework.Runtime {
             if (t == null)
                 return;
 
+            transitionsBlocked = true;
             //Reset triggers 
             foreach (var a in t.conditions) {
                 if (a.parameter is TriggerParameter tp) {
@@ -65,6 +71,7 @@ namespace StateMachineFramework.Runtime {
             if (transitionCount > transitionsPerFrameTreshhold) {
                 Debug.LogError("[SMF] Transition treshhold per fame exceeded. Moving execution to new frame");
                 overflownTransition = t;
+                transitionsBlocked = false;
                 return;
             }
 
@@ -77,7 +84,7 @@ namespace StateMachineFramework.Runtime {
             for (int i = activeNodes.Count - 1; i >= activeIndex + 1; i--)
                 ExitNode(activeNodes[i]);
 
-           
+
 
             bool reentry = activeNodes.Contains(t.target);
 
@@ -101,6 +108,8 @@ namespace StateMachineFramework.Runtime {
                 EnterNode(t.target);
             }
 
+            transitionsBlocked = false;
+            CheckTransitions();
 
         }
 
@@ -158,5 +167,6 @@ namespace StateMachineFramework.Runtime {
                 Move(g);
             }
         }
+
     }
 }

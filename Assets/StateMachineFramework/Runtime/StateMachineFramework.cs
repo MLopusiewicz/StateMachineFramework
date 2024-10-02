@@ -29,7 +29,7 @@ namespace StateMachineFramework.Runtime {
         private void Awake() {
             logic = new StateMachineLogic(_nodes, _parameters);
             parameters = new ParameterController(_parameters);
-            logic.OnNodeExit += InterrupUpdate;
+            logic.OnNodeExit += InterruptUpdate;
             foreach (var node in _nodes) {
                 foreach (var behaviour in node.behaviours) {
                     behaviour.Awake(this.gameObject);
@@ -62,7 +62,7 @@ namespace StateMachineFramework.Runtime {
         }
 
 
-        private void InterrupUpdate(Node node) {
+        private void InterruptUpdate(Node node) {
             UpdateInterruptToken = true;
         }
         private void OnDestroy() {

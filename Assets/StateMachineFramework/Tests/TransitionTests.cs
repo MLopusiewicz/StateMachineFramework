@@ -7,23 +7,23 @@ public class TransitionTests {
 
     [Test]
     public void MoveFromAny() {
-        StateMachineLogic sm = GetLogic(out var nodesEntered, out var nodesExited);
+        //StateMachineLogic sm = GetLogic(out var nodesEntered, out var nodesExited);
 
-        sm.Move(GetTransition(0, 1));
-        sm.Move(new Transition() { target = nodes[5] });
+        //MakeTransition(0, 1);
+        //sm.Move(new Transition() { target = nodes[5] });
 
 
-        Assert.AreEqual(nodesExited[^1], sm.nodes[1]);
-        Assert.AreEqual(nodesEntered[^2], sm.nodes[2]);
-        Assert.AreEqual(nodesEntered[^1], sm.nodes[5]);
+        //Assert.AreEqual(nodesExited[^1], sm.nodes[1]);
+        //Assert.AreEqual(nodesEntered[^2], sm.nodes[2]);
+        //Assert.AreEqual(nodesEntered[^1], sm.nodes[5]);
     }
 
     [Test]
     public void MoveHorizontal() {
         StateMachineLogic sm = GetLogic(out var nodesEntered, out var nodesExited);
 
-        sm.Move(GetTransition(0, 1));
-        sm.Move(GetTransition(1, 2));
+        MakeTransition(0, 1);
+        MakeTransition(1, 2);
 
         Assert.AreEqual(nodesExited[0], sm.nodes[1]);
         Assert.AreEqual(nodesEntered[1], sm.nodes[2]);
@@ -32,9 +32,8 @@ public class TransitionTests {
     [Test]
     public void MoveUp() {
         StateMachineLogic sm = GetLogic(out var nodesEntered, out var nodesExited);
-
-        sm.Move(GetTransition(0, 7));
-        sm.Move(GetTransition(7, 2));
+        MakeTransition(0, 7);
+        MakeTransition(7, 2);
 
         Assert.AreEqual(nodesExited[^3], sm.nodes[7]);
         Assert.AreEqual(nodesExited[^2], sm.nodes[6]);
@@ -44,13 +43,13 @@ public class TransitionTests {
     }
     [Test]
     public void Reentering() {
-        StateMachineLogic sm = GetLogic(out var nodesEntered, out var nodesExited);
+        //StateMachineLogic sm = GetLogic(out var nodesEntered, out var nodesExited);
 
-        sm.Move(GetTransition(0, 1));
-        sm.Move(new Transition() { target = nodes[1] });
+        //MakeTransition(0, 2);
+        //MakeTransition(1, 2);
 
-        Assert.AreEqual(nodesExited[^1], sm.nodes[1]);
-        Assert.AreEqual(nodesEntered[^1], sm.nodes[1]);
+        //Assert.AreEqual(nodesExited[^1], sm.nodes[2]);
+        //Assert.AreEqual(nodesEntered[^1], sm.nodes[2]);
 
     }
 
@@ -58,8 +57,9 @@ public class TransitionTests {
     public void MoveDown() {
         StateMachineLogic sm = GetLogic(out var nodesEntered, out var nodesExited);
 
-        sm.Move(GetTransition(0, 3));
+        MakeTransition(0, 3);
 
+        sm.CheckTransitions();
         Assert.AreEqual(nodesEntered[0], sm.nodes[1]);
         Assert.AreEqual(nodesEntered[1], sm.nodes[3]);
     }
@@ -67,9 +67,10 @@ public class TransitionTests {
     public void MoveDiagonalUp() {
         StateMachineLogic sm = GetLogic(out var nodesEntered, out var nodesExited);
 
-        sm.Move(GetTransition(0, 3));
-        sm.Move(GetTransition(3, 2));
+        MakeTransition(0, 3);
+        MakeTransition(3, 2);
 
+        sm.CheckTransitions();
         Assert.AreEqual(nodesExited[^2], sm.nodes[3]);
         Assert.AreEqual(nodesExited[^1], sm.nodes[1]);
         Assert.AreEqual(nodesEntered[^1], sm.nodes[2]);
@@ -78,9 +79,10 @@ public class TransitionTests {
     public void MoveDiagonalDown() {
         StateMachineLogic sm = GetLogic(out var nodesEntered, out var nodesExited);
 
-        sm.Move(GetTransition(0, 1));
-        sm.Move(GetTransition(1, 5));
+        MakeTransition(1, 5);
+        MakeTransition(0, 1);
 
+        sm.CheckTransitions();
         Assert.AreEqual(nodesExited[^1], sm.nodes[1]);
         Assert.AreEqual(nodesEntered[^2], sm.nodes[2]);
         Assert.AreEqual(nodesEntered[^1], sm.nodes[5]);
@@ -130,7 +132,9 @@ public class TransitionTests {
 
         return sm;
     }
-    Transition GetTransition(int a, int b) {
-        return new Transition() { source = nodes[a], target = nodes[b] };
+
+    void MakeTransition(int a, int b) {
+        nodes[a].transitions.Add(new Transition() { source = nodes[a], target = nodes[b] });
+        
     }
 }

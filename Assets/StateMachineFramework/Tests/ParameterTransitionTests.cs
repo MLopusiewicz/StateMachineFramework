@@ -7,7 +7,9 @@ public class ParameterTransitionTests {
     public void TriggerAnyStateTransition() {
 
         var sm = GetLogic(out var entryHistory, out var exitHistory, out var param);
-        sm.Move(GetTransition(0, 2));
+
+        MakeTransition(0, 2);
+        sm.CheckTransitions();
         (param[0] as TriggerParameter).Value = true;
 
         Assert.AreEqual(nodes[3], entryHistory[^1]);
@@ -73,11 +75,7 @@ public class ParameterTransitionTests {
         return sm;
     }
 
-    Transition GetTransition(int a, int b) {
-        return new Transition() { source = nodes[a], target = nodes[b] };
+    void MakeTransition(int a, int b) {
+        nodes[a].transitions.Add(new Transition() { source = nodes[a], target = nodes[b] });
     }
-}
-class TreeBuilder {
-
-
 }
