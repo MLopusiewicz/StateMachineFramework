@@ -8,6 +8,7 @@ namespace StateMachineFramework.Runtime {
         public virtual void Awake(GameObject obj) { }
         public virtual void Start() { }
         public virtual void Update() { }
+        public virtual void LateUpdate() { }
         public abstract void Enter();
         public abstract void Exit();
         public virtual void OnDestroy() { }

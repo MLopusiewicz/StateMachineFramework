@@ -60,7 +60,19 @@ namespace StateMachineFramework.Runtime {
             }
 
         }
+        private void LateUpdate() {
+            UpdateInterruptToken = false;
+            foreach (var node in logic.activeNodes) {
+                foreach (var behaviour in node.behaviours) {
+                    if (UpdateInterruptToken)
+                        break;
+                    behaviour.LateUpdate();
+                }
+                if (UpdateInterruptToken)
+                    break;
+            }
 
+        }
 
         private void InterruptUpdate(Node node) {
             UpdateInterruptToken = true;
