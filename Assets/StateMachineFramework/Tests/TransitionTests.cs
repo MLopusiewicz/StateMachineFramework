@@ -1,7 +1,6 @@
 using NUnit.Framework;
 using StateMachineFramework.Runtime;
 using System.Collections.Generic;
-using UnityEngine.Experimental.AI;
 
 public class TransitionTests {
 

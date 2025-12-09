@@ -1,8 +1,6 @@
-using Codice.Client.BaseCommands;
 using StateMachineFramework.Runtime;
 using System;
 using System.Collections.Generic;
-using System.Security.Permissions;
 using UnityEditor;
 using UnityEngine;
 using TreeNode = StateMachineFramework.Runtime.TreeNode;
