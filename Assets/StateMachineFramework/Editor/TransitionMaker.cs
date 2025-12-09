@@ -1,6 +1,5 @@
 ﻿using StateMachineFramework.Runtime;
 using StateMachineFramework.View;
-using System;
 using UnityEngine.UIElements;
 
 namespace StateMachineFramework.Editor {

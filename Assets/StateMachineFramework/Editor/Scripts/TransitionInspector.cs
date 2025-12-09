@@ -1,8 +1,6 @@
 using StateMachineFramework.Runtime;
 using StateMachineFramework.View;
 using System.Collections.Generic;
-using System.Runtime.Serialization;
-using UnityEditor;
 using UnityEngine.UIElements;
 
 namespace StateMachineFramework.Editor {

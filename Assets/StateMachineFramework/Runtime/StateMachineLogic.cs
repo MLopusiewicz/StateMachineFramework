@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Security.Cryptography;
 using UnityEngine;
 
 namespace StateMachineFramework.Runtime {
@@ -41,8 +40,8 @@ namespace StateMachineFramework.Runtime {
                     return;
                 }
             }
-            foreach (var node in activeNodes) {
-
+            for (int i = activeNodes.Count - 1; i >= 0; i--) {
+                var node = activeNodes[i];
                 foreach (var transition in node.transitions) {
                     if (transition.target.parent == transition.source)
                         continue;
