@@ -1,5 +1,4 @@
-﻿using StateMachineFramework.Runtime;
-using UnityEditor;
+﻿using UnityEditor;
 using UnityEngine;
 
 namespace StateMachineFramework.Editor {
